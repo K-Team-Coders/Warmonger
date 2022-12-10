@@ -1,43 +1,74 @@
-from loguru import logger
-from telethon import TelegramClient
 import datetime
 import re
+import os
 
-#Реквизиты приложения. НЕ ТРОГАТЬ
-api_id = 15316406
-api_hash = 'ad62ac5526adf8d79b7d4b5d26f7e93e'
-session_name = 'Session'
-client = TelegramClient(session_name, api_id, api_hash)
+from tqdm.asyncio import tqdm
+from loguru import logger
+from telethon import TelegramClient
+import nest_asyncio
+nest_asyncio.apply()
 
-#Список каналов. Принимаются id, номера телефонов, имена пользователей.
-chat_list = ['https://t.me/voenacher']
+class TelegramParser():
 
-#Диапазон дат (год, месяц, день)
-from_date = datetime.date(2022,3, 1)
-to_date = datetime.date(2022, 3, 7)
+    def __init__(self, config) -> None:
+        '''
+        Реквизиты приложения. Согласно документации telethone
+        '''
+        
+        from dotenv import load_dotenv
+        load_dotenv(config)
 
-#Ключевое слово для поиска
-search_key = 'Путин'
+        self.api_id = os.getenv('TELETHONE_ID') 
+        self.api_hash = os.getenv('TELETHONE_HASH')
+        self.session_name = 'Session'
+    
+    def setSearchQuery(self, query) -> None:
+        '''
+        Ключевое слово или слова для поиска
+        '''
+        if type(query) != type([1,2]):
+            self.search_keys = [query]
+        else:
+            self.search_keys = query
 
-with open('result.txt', 'w') as f:
-    for chat in chat_list:
-        async def get_messages_at_date(chat, from_date, to_date, search_key):
-            result = []
-            limit_day = to_date + datetime.timedelta(days=1)
-            lower_day = from_date - datetime.timedelta(days=1)
-            iterator = client.iter_messages(chat, offset_date=limit_day, search=search_key)
-            async for message in iterator:
-                if message.date.day == lower_day.day and message.date.month == lower_day.month and message.date.year == lower_day.year:
-                    return result
-                edited_text = re.sub('[^\x00-\x7Fа-яА-Я]', '', message.text)
-                one_message_info = [message.sender.username, message.date, edited_text]
-                result.append(one_message_info)
-                logger.debug(message.date)
-                logger.debug(from_date)
+    def setTimeBorders(self, from_date: datetime.date, to_date: datetime.date ) -> None:
+        '''
+        Диапазон дат (год, месяц, день)
+        '''
+        self.from_date = from_date
+        self.to_date = to_date
 
+    def setChannels(self, channels: list) -> None:
+        '''
+        Список каналов. Принимаются id, номера телефонов, имена пользователей.
+        '''
+        self.chat_list = channels
 
-        with client:
-            date_filt = client.loop.run_until_complete(get_messages_at_date(chat, from_date, to_date, search_key))
-            if date_filt != None:
-                for item in date_filt:
-                    f.write(f'{item[0]} ; {item[1]} ; {item[2]}\n')
+    async def run(self) -> list:
+        '''
+        По введении параметров - запускаете эту функцию
+        '''
+        self.client = TelegramClient(self.session_name, self.api_id, self.api_hash)
+
+        result = []
+        
+        for chat in self.chat_list:
+            async def get_messages_at_date(chat, from_date, to_date, search_key):
+                result = []
+                for key in search_key:
+                    limit_day = to_date + datetime.timedelta(days=1)
+                    lower_day = from_date - datetime.timedelta(days=1)
+                    iterator = self.client.iter_messages(chat, offset_date=limit_day, search=key)
+                    async for message in tqdm(iterator):
+                        if message.date.day == lower_day.day and message.date.month == lower_day.month and message.date.year == lower_day.year:
+                            return result
+                        edited_text = re.sub('[^\x00-\x7Fа-яА-Я]', '', message.text)
+                        one_message_info = [message.sender.username, message.date, edited_text]
+                        result.append(one_message_info)
+
+            async with self.client:
+                date_filt = self.client.loop.run_until_complete(get_messages_at_date(chat, self.from_date, self.to_date, self.search_keys))
+                if date_filt != None:
+                    result.append(date_filt)
+
+        return result
