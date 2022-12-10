@@ -4,6 +4,20 @@
 
 # Установка
 
+СОЗДАЙТЕ ФАЙЛИК CREDENTIALS.env в корне проекта, туда поместите креды для подключения к БД PostgreSQL 
+
+`PORT = port `
+
+`USER = user `
+
+`PASSWORD = password `
+
+`HOST = localhost \ ip `
+
+`NAME = name`
+
+
+
 Скачайте репозиторий из *GitHub: https://github.com/K-Team-Coders/AfterburnerSQL* или *GitLab: https://git.codenrock.com/skolkovo-hack-2022/cnrprod-team-23883/rostelekom-task/-/tree/lead/*
 
 # Запуск приложения через Docker
