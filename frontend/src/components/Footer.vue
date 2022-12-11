@@ -3,7 +3,7 @@
   <div class="container px-6 pt-6 mr-64 ">
     <div class="flex justify-center mb-6"> 
       <p class="flex text-2xl mt-7 mr-2 font-rale">See on GitHUB:</p>
-      <a href="https://github.com/K-Team-Coders/AnyHack" target="_blank" type="button" class="rounded-lg border-2 border-black text-black leading-normal uppercase hover:bg-black hover:bg-opacity-80 hover:text-white focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-1/4 h-20 m-1">
+      <a href="https://github.com/K-Team-Coders/Warmonger" target="_blank" type="button" class="rounded-lg border-2 border-black text-black leading-normal uppercase hover:bg-black hover:bg-opacity-80 hover:text-white focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-1/4 h-20 m-1">
         <svg aria-hidden="true"
         focusable="false"
         data-prefix="fab"
