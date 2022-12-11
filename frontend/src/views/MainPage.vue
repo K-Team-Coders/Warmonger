@@ -1,128 +1,53 @@
 <template>
-  <body>
+  <body class="bg-idealblack">
     <Header></Header>
-    <div class="px-12">
+    <div class="px-12 pt-16">
       <div class="flex">
         <div class="w-2/3">
-          <yandex-map :coords="coords" :settings="settings">
+          <div class="px-1">
+            <h2
+              class="text-center font-rale font-bold text-4xl text-whitesmoke mb-3"
+            >
+              Карта событий
+            </h2>
+            <yandex-map :coords="coords" :settings="settings" :zoom="5" :cluster-options="clusterOptions">
+            <ymap-marker @click="shownew()" :coords="[47.096701, 65.541300]" marker-type:='Circle' marker-id="666" cluster-name="1"  />
+            <ymap-marker :coords="[47.096701, 37.541300]" marker-type:='Circle' marker-id="666" cluster-name="1" />
+            <ymap-marker :coords="[47.096701, 45.541300]" marker-type:='Circle' marker-id="666" cluster-name="1" />
+            
     </yandex-map>
-          <div class="mt-4 grid grid-cols-4 gap-4">
-            <div class="bg-whitesmoke"><BarChart></BarChart></div>
-            <div class="bg-whitesmoke"><BarChart></BarChart></div>
-            <div class="bg-whitesmoke"><BarChart></BarChart></div>
-            <div class="bg-whitesmoke"><BarChart></BarChart></div>
+            <div class="mt-4 grid grid-cols-4 gap-4">
+              <div class="bg-white"><BarChart></BarChart></div>
+              <div class="bg-whitesmoke"><BarChart></BarChart></div>
+              <div class="bg-whitesmoke"><BarChart></BarChart></div>
+              <div class="bg-whitesmoke"><BarChart></BarChart></div>
             </div>
+          </div>
         </div>
         <div class="w-1/3">
           <div class="px-4">
-            <h2 class="text-center font-rale font-bold text-4xl mb-3">
+            <h2
+              class="text-center font-rale font-bold text-4xl text-whitesmoke mb-3"
+            >
               Последние события
             </h2>
-            <div class="px-2">
-              <div class="mt-2 bg-whitesmoke h-screen overflow-y-scroll">
-                <div class="px-6 pb-4 text-xl font-rale font-medium overflow ">
-                <div class="w-full p-2 border-b-2 border-red-300 ">
-                  <a class="text-black hover:text-red-400 transition">
-                  Медведев перечислил места нахождения врагов России                 
-                  </a>
-                </div>
-                <div class="w-full p-2 border-b-2 border-red-300">
-                  <a class="text-black hover:text-red-400 transition">
-                  Зеленский рассказал о передаче Норвегией Украине 100 миллионов долларов                  
-                  </a>
-                </div>
-                <div class="w-full p-2 border-b-2 border-red-300">
-                  <a class="text-black hover:text-red-400 transition">
-                  На Украине заявили о готовности наносить удары по территории России                   
-                  </a>
-                </div>
-                <div class="w-full p-2 border-b-2 border-red-300">
-                  <a class="text-black hover:text-red-400 transition">
-                  Япония заявила о намерении продвигать санкции против России
-                  </a>
-                </div>
-                <div class="w-full p-2 border-b-2 border-red-300">
-                  <a class="text-black hover:text-red-400 transition">
-                  В МИД объявили демарш Финляндии из-за надругательства над российским флагом           
-                  </a>
-                </div>
-                <div class="w-full p-2 border-b-2 border-red-300">
-                  <a class="text-black hover:text-red-400 transition">
-                  Минобороны сообщило о занятии выгодных рубежей на краснолиманском направлении                   
-                  </a>
-                </div>
-                <div class="w-full p-2 border-b-2 border-red-300">
-                  <a class="text-black hover:text-red-400 transition">
-                  Турция отказалась уступать США в вопросе нефтяных танкеров в ее проливах                   
-                  </a>
-                </div>
-                <div class="w-full p-2 border-b-2 border-red-300">
-                  <a class="text-black hover:text-red-400 transition">
-                  Китай предложил снизить влияние США в нефтяной отрасли                  
-                  </a>
-                </div>
-                <div class="w-full p-2 border-b-2 border-red-300">
-                  <a class="text-black hover:text-red-400 transition">
-                  В США связали победу Украины с угрозой начала ядерной войны                  
-                  </a>
-                </div>
-                <div class="w-full p-2 border-b-2 border-red-300">
-                  <a class="text-black hover:text-red-400 transition">
-                  В США связали победу Украины с угрозой начала ядерной войны                  
-                  </a>
-                </div><div class="w-full p-2 border-b-2 border-red-300">
-                  <a class="text-black hover:text-red-400 transition">
-                  В США связали победу Украины с угрозой начала ядерной войны                  
-                  </a>
-                </div><div class="w-full p-2 border-b-2 border-red-300">
-                  <a class="text-black hover:text-red-400 transition">
-                  В США связали победу Украины с угрозой начала ядерной войны                  
-                  </a>
-                </div><div class="w-full p-2 border-b-2 border-red-300">
-                  <a class="text-black hover:text-red-400 transition">
-                  В США связали победу Украины с угрозой начала ядерной войны                  
-                  </a>
-                </div><div class="w-full p-2 border-b-2 border-red-300">
-                  <a class="text-black hover:text-red-400 transition">
-                  В США связали победу Украины с угрозой начала ядерной войны                  
-                  </a>
-                </div><div class="w-full p-2 border-b-2 border-red-300">
-                  <a class="text-black hover:text-red-400 transition">
-                  В США связали победу Украины с угрозой начала ядерной войны                  
-                  </a>
-                </div><div class="w-full p-2 border-b-2 border-red-300">
-                  <a class="text-black hover:text-red-400 transition">
-                  В США связали победу Украины с угрозой начала ядерной войны                  
-                  </a>
-                </div><div class="w-full p-2 border-b-2 border-red-300">
-                  <a class="text-black hover:text-red-400 transition">
-                  В США связали победу Украины с угрозой начала ядерной войны                  
-                  </a>
-                </div><div class="w-full p-2 border-b-2 border-red-300">
-                  <a class="text-black hover:text-red-400 transition">
-                  В США связали победу Украины с угрозой начала ядерной войны                  
-                  </a>
-                </div><div class="w-full p-2 border-b-2 border-red-300">
-                  <a class="text-black hover:text-red-400 transition">
-                  В США связали победу Украины с угрозой начала ядерной войны                  
-                  </a>
-                </div><div class="w-full p-2 border-b-2 border-red-300">
-                  <a class="text-black hover:text-red-400 transition">
-                  В США связали победу Украины с угрозой начала ядерной войны                  
-                  </a>
-                </div><div class="w-full p-2 border-b-2 border-red-300">
-                  <a class="text-black hover:text-red-400 transition">
-                  В США связали победу Украины с угрозой начала ядерной войны                  
-                  </a>
-                </div><div class="w-full p-2 border-b-2 border-red-300">
-                  <a class="text-black hover:text-red-400 transition">
-                  В США связали победу Украины с угрозой начала ядерной войны                  
-                  </a>
-                </div><div class="w-full p-2 border-b-2 border-red-300">
-                  <a class="text-black hover:text-red-400 transition">
-                  В США связали победу Украины с угрозой начала ядерной войны                  
-                  </a>
-                </div>
+            <div class="px-2 border-opacity-80 border-2 border-red-800">
+                  <select id="countries" class="px-6 mt-2 text-idealblack border-red-900 border-2 text-lg rounded-lg block w-full p-2">
+                  <option selected>Выберите тему </option>
+                  <option>Путин</option>
+                  <option>Путин</option>
+                  <option>Путин</option>
+              </select>
+              <div class="mt-2 bg-idealblack h-screen overflow-y-scroll">
+                <div class="px-6 pb-4 text-2xl font-rale font-medium">
+                  <div
+                    class="w-full p-2 border-b-2 text-whitesmoke hover:text-red-400 border-red-800 hover:border-gray-400 transition"
+                  >
+                  <p class="font-bold">12.12.2020 12:05</p>
+                    <p class="">
+                      Медведев перечислил места нахождения врагов России
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -150,12 +75,36 @@ const settings = {
 }
 
 export default {
-  components: { Header, Footer, Carousel, yandexMap, ymapMarker, BarChart},
+  components: { Header, Footer, Carousel, yandexMap, ymapMarker, BarChart },
 
-  data(){
+  data () {
     return {
-      coords: [55.753215, 37.622504],
-      settings: settings
+      coords: [55.753215, 37.622504], 
+      settings: settings,
+      clusterOptions: {
+      1: {
+        clusterDisableClickZoom: true,
+        clusterOpenBalloonOnClick: true,
+        clusterBalloonLayout: [
+          '<ul class=list>',
+          '{% for geoObject in properties.geoObjects %}',
+          '<li><a href=# class="list_item">{{ geoObject.properties.balloonContentHeader|raw }}</a></li>',
+          '{% endfor %}',
+          '</ul>',
+        ].join(''),
+      },
+    },
+    news: {
+      id: '',
+      title: 'Пизда',
+      text: '',
+      date: '',
+    }
+    }
+  },
+  methods:{
+    shownew(){
+      console.log('ПИЗДА')
     }
   }
 }
