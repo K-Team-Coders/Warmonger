@@ -3,20 +3,25 @@
     <Header></Header>
     <div class="px-12">
       <div class="flex">
-        <div class="w-2/3 bg-gray-300">
+        <div class="w-2/3">
           <yandex-map :coords="coords" :settings="settings">
     </yandex-map>
-          <div class="bg-green-200">s</div>
+          <div class="mt-4 grid grid-cols-4 gap-4">
+            <div class="bg-whitesmoke"><BarChart></BarChart></div>
+            <div class="bg-whitesmoke"><BarChart></BarChart></div>
+            <div class="bg-whitesmoke"><BarChart></BarChart></div>
+            <div class="bg-whitesmoke"><BarChart></BarChart></div>
+            </div>
         </div>
-        <div class="w-1/3 ">
+        <div class="w-1/3">
           <div class="px-4">
             <h2 class="text-center font-rale font-bold text-4xl mb-3">
               Последние события
             </h2>
-            <div class="px-5">
-              <div class=" justify-center mt-2 bg-whitesmoke">
-                <div class="px-6 pb-4 text-xl font-rale font-medium">
-                <div class="w-full p-2 border-b-2 border-red-300">
+            <div class="px-2">
+              <div class="mt-2 bg-whitesmoke h-screen overflow-y-scroll">
+                <div class="px-6 pb-4 text-xl font-rale font-medium overflow ">
+                <div class="w-full p-2 border-b-2 border-red-300 ">
                   <a class="text-black hover:text-red-400 transition">
                   Медведев перечислил места нахождения врагов России                 
                   </a>
@@ -61,6 +66,63 @@
                   В США связали победу Украины с угрозой начала ядерной войны                  
                   </a>
                 </div>
+                <div class="w-full p-2 border-b-2 border-red-300">
+                  <a class="text-black hover:text-red-400 transition">
+                  В США связали победу Украины с угрозой начала ядерной войны                  
+                  </a>
+                </div><div class="w-full p-2 border-b-2 border-red-300">
+                  <a class="text-black hover:text-red-400 transition">
+                  В США связали победу Украины с угрозой начала ядерной войны                  
+                  </a>
+                </div><div class="w-full p-2 border-b-2 border-red-300">
+                  <a class="text-black hover:text-red-400 transition">
+                  В США связали победу Украины с угрозой начала ядерной войны                  
+                  </a>
+                </div><div class="w-full p-2 border-b-2 border-red-300">
+                  <a class="text-black hover:text-red-400 transition">
+                  В США связали победу Украины с угрозой начала ядерной войны                  
+                  </a>
+                </div><div class="w-full p-2 border-b-2 border-red-300">
+                  <a class="text-black hover:text-red-400 transition">
+                  В США связали победу Украины с угрозой начала ядерной войны                  
+                  </a>
+                </div><div class="w-full p-2 border-b-2 border-red-300">
+                  <a class="text-black hover:text-red-400 transition">
+                  В США связали победу Украины с угрозой начала ядерной войны                  
+                  </a>
+                </div><div class="w-full p-2 border-b-2 border-red-300">
+                  <a class="text-black hover:text-red-400 transition">
+                  В США связали победу Украины с угрозой начала ядерной войны                  
+                  </a>
+                </div><div class="w-full p-2 border-b-2 border-red-300">
+                  <a class="text-black hover:text-red-400 transition">
+                  В США связали победу Украины с угрозой начала ядерной войны                  
+                  </a>
+                </div><div class="w-full p-2 border-b-2 border-red-300">
+                  <a class="text-black hover:text-red-400 transition">
+                  В США связали победу Украины с угрозой начала ядерной войны                  
+                  </a>
+                </div><div class="w-full p-2 border-b-2 border-red-300">
+                  <a class="text-black hover:text-red-400 transition">
+                  В США связали победу Украины с угрозой начала ядерной войны                  
+                  </a>
+                </div><div class="w-full p-2 border-b-2 border-red-300">
+                  <a class="text-black hover:text-red-400 transition">
+                  В США связали победу Украины с угрозой начала ядерной войны                  
+                  </a>
+                </div><div class="w-full p-2 border-b-2 border-red-300">
+                  <a class="text-black hover:text-red-400 transition">
+                  В США связали победу Украины с угрозой начала ядерной войны                  
+                  </a>
+                </div><div class="w-full p-2 border-b-2 border-red-300">
+                  <a class="text-black hover:text-red-400 transition">
+                  В США связали победу Украины с угрозой начала ядерной войны                  
+                  </a>
+                </div><div class="w-full p-2 border-b-2 border-red-300">
+                  <a class="text-black hover:text-red-400 transition">
+                  В США связали победу Украины с угрозой начала ядерной войны                  
+                  </a>
+                </div>
                 </div>
               </div>
             </div>
@@ -68,6 +130,7 @@
         </div>
       </div>
     </div>
+
     <Footer></Footer>
   </body>
 </template>
@@ -76,6 +139,7 @@
 import Header from '../components/Header.vue'
 import Footer from '../components/Footer.vue'
 import Carousel from '../components/Carousel.vue'
+import BarChart from '../components/charts/BarChart.vue'
 import { yandexMap, ymapMarker } from 'vue-yandex-maps'
 const settings = {
   apiKey: '06856716-badb-42a6-9815-4c8e630af04b',
@@ -86,7 +150,7 @@ const settings = {
 }
 
 export default {
-  components: { Header, Footer, Carousel, yandexMap, ymapMarker},
+  components: { Header, Footer, Carousel, yandexMap, ymapMarker, BarChart},
 
   data(){
     return {
