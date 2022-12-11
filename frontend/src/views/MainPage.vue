@@ -4,7 +4,11 @@
     <div class="px-12">
       <div class="flex">
         <div class="w-2/3">
-          <yandex-map :coords="coords" :settings="settings">
+          <yandex-map :coords="coords" :settings="settings" :zoom="5" :cluster-options="clusterOptions">
+            <ymap-marker :coords="[47.096701, 65.541300]" marker-type:='Circle' marker-id="666" cluster-name="1"  />
+            <ymap-marker :coords="[47.096701, 37.541300]" marker-type:='Circle' marker-id="666" cluster-name="1" />
+            <ymap-marker :coords="[47.096701, 45.541300]" marker-type:='Circle' marker-id="666" cluster-name="1" />
+            
     </yandex-map>
           <div class="mt-4 grid grid-cols-4 gap-4">
             <div class="bg-whitesmoke"><BarChart></BarChart></div>
@@ -154,8 +158,21 @@ export default {
 
   data(){
     return {
-      coords: [55.753215, 37.622504],
-      settings: settings
+      coords: [55.753215, 37.622504], 
+      settings: settings,
+      clusterOptions: {
+      1: {
+        clusterDisableClickZoom: true,
+        clusterOpenBalloonOnClick: true,
+        clusterBalloonLayout: [
+          '<ul class=list>',
+          '{% for geoObject in properties.geoObjects %}',
+          '<li><a href=# class="list_item">{{ geoObject.properties.balloonContentHeader|raw }}</a></li>',
+          '{% endfor %}',
+          '</ul>',
+        ].join(''),
+      },
+    },
     }
   }
 }
