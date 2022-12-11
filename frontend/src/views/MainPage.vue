@@ -13,7 +13,8 @@
               <ymap-marker v-for="item in maplocations" :key="item.id"
                 :coords= "[item.latitude, item.longitude]"
                 :marker-id="item.id"
-                :cluster-name="1" />
+                :cluster-name="1"
+                :balloon="{header: item.adress}" />
               
             </yandex-map>
             <div class="mt-4 grid grid-cols-4 gap-4">
@@ -88,7 +89,7 @@ export default {
 
   data() {
     return {
-      coords: [55.753215, 37.622504],
+      coords: [55.753215, 46.622504],
       settings: settings,
       newsEnabled: false,
 
@@ -182,7 +183,7 @@ export default {
   methods: {
     sendid() {
       axios
-        .post('http://127.0.0.1:8000/main/getAllNews/?format=json', this.news[0].id)
+        .get('http://127.0.0.1:8000/main/getDetailNews/' + news.id+ '/?format=json')
         .then(response => {
           console.log(this.news.id)
         
