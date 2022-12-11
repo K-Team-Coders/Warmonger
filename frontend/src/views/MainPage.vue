@@ -1,13 +1,18 @@
 <template>
   <body class="bg-idealblack">
     <Header></Header>
-    <div class="px-12">
+    <div class="px-12 pt-16">
       <div class="flex">
-        <div class="w-2/3 mt-14 p-3 border-2 border-red-800">
-          <div>
+        <div class="w-2/3">
+          <div class="px-1">
+            <h2
+              class="text-center font-rale font-bold text-4xl text-whitesmoke mb-3"
+            >
+              Карта событий
+            </h2>
             <yandex-map :coords="coords" :settings="settings"> </yandex-map>
             <div class="mt-4 grid grid-cols-4 gap-4">
-              <div class="bg-whitesmoke"><BarChart></BarChart></div>
+              <div class="bg-idealblack"><BarChart></BarChart></div>
               <div class="bg-whitesmoke"><BarChart></BarChart></div>
               <div class="bg-whitesmoke"><BarChart></BarChart></div>
               <div class="bg-whitesmoke"><BarChart></BarChart></div>
@@ -21,13 +26,14 @@
             >
               Последние события
             </h2>
-            <div class="px-2 border-2 border-red-800">
+            <div class="px-2  border-opacity-80 border-2 border-red-800">
               <div class="mt-2 bg-idealblack h-screen overflow-y-scroll">
                 <div class="px-6 pb-4 text-2xl font-rale font-medium">
                   <div
                     class="w-full p-2 border-b-2 text-whitesmoke hover:text-red-400 border-red-800 hover:border-gray-400 transition"
                   >
-                    <p class="hover:none">
+                  <p class="font-bold">12.12.2020 12:05</p>
+                    <p class="">
                       Медведев перечислил места нахождения врагов России
                     </p>
                   </div>
