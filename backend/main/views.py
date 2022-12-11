@@ -46,7 +46,7 @@ class addNew(APIView):
         def organizationsDB(name = ' ', site = ' '):
             logger.debug(name)
             logger.debug(site)
-            organizationObject, isCreated = Organisation.objects.get_or_create(
+            organizationObject, isCreated = Organization.objects.get_or_create(
                 name = name,
                 site = site
             )

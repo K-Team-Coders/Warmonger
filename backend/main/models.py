@@ -32,7 +32,7 @@ class Person(models.Model):
     def __str__(self) -> str:
         return self.name
 
-class Organisation(models.Model):
+class Organization(models.Model):
     name = models.CharField(default=' ', max_length=90)
     site = models.URLField(default=' ')
 
@@ -50,7 +50,7 @@ class News(models.Model):
 
     locations = models.ManyToManyField(Location)
     persons = models.ManyToManyField(Person)
-    organizations = models.ManyToManyField(Organisation)
+    organizations = models.ManyToManyField(Organization)
     tags = models.ManyToManyField(Tag)
 
     def __repr__(self) -> str:

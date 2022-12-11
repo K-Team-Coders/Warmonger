@@ -20,7 +20,7 @@ class locationSerializer(serializers.ModelSerializer):
 
 class organizationSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Organisation
+        model = Organization
         fields = '__all__'
 
 class newsSerializer(serializers.ModelSerializer):
