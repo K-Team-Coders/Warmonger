@@ -8,7 +8,6 @@ from pymystem3 import Mystem
 import spacy
 
 from telegram import *
-# from news import *
 
 def lemmatizeText(text: str):
     '''
@@ -173,18 +172,12 @@ class ParserOrganizer():
 
 path = pathlib.Path(__file__).resolve().parent
 organizer = ParserOrganizer(os.path.join(path, 'TELETHONE.env'))
+
+'''
+Эти параметры вы можете менять как хотите. В соответствии с требованиями Вашего заказчика. 
+'''
 organizer.setChannels(['https://t.me/insiderUKR'])
 organizer.setSearchQuery(['вооружение'])
 organizer.setTimeBorders(datetime.date(2022, 12, 9), datetime.date(2022, 12, 11))
 
 data = asyncio.run(organizer.run())
-
-# print(data)
-
-# with open('result.txt', 'w') as f:
-#     for subdata in data:
-#         f.write('\n')
-#         for new in subdata:
-#             f.write('\n')
-#             f.write(str(new))
-# requests.post('http://127.0.0.1:8000/main/addNews/', data={'news':'awwaw', 'orgs':'org', 'locs':'loc'})
