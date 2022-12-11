@@ -48,7 +48,7 @@
               </select>
               <div class="mt-2 bg-idealblack h-screen overflow-y-scroll">
                 <div class="px-6 pb-4 text-2xl font-rale font-medium">
-                  <div @click="sendid()" v-for="item in news" :key='item.id'
+                  <div @click="sendid(item.id)" v-for="item in news" :key='item.id'
                     class=" w-full p-2 border-b-2 text-whitesmoke hover:text-red-400 border-red-800 hover:border-gray-400 transition">
                     <p class="font-bold">{{ item.date }}</p>
                     <p class="">
@@ -181,7 +181,8 @@ export default {
       })
   },
   methods: {
-    sendid() {
+    sendid(itemid) {
+      console.log(itemid)
       axios
         .post('http://127.0.0.1:8000/main/getAllNews/?format=json', this.news[0].id)
         .then(response => {
