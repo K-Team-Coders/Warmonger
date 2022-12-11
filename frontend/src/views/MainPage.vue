@@ -13,7 +13,7 @@
               <ymap-marker v-for="item in maplocations" :key="item.id"
                 :coords= "[item.latitude, item.longitude]"
                 :marker-id="item.id"
-                :cluster-name="item.cluster" />
+                :cluster-name="1" />
               
             </yandex-map>
             <div class="mt-4 grid grid-cols-4 gap-4">
@@ -185,9 +185,7 @@ export default {
         .post('http://127.0.0.1:8000/main/getAllNews/?format=json', this.news[0].id)
         .then(response => {
           console.log(this.news.id)
-          
-          this.current_news.latitude = response.data[45].locations[0].latitude
-          this.current_news.longitude = response.data[45].locations[0].longitude
+        
         }
         )
     }
