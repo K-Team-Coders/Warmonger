@@ -6,7 +6,7 @@
         <div class="w-2/3 mt-14 p-3 border-2 border-red-800">
           <div>
             <yandex-map :coords="coords" :settings="settings" :zoom="5" :cluster-options="clusterOptions">
-            <ymap-marker :coords="[47.096701, 65.541300]" marker-type:='Circle' marker-id="666" cluster-name="1"  />
+            <ymap-marker @click="shownew()" :coords="[47.096701, 65.541300]" marker-type:='Circle' marker-id="666" cluster-name="1"  />
             <ymap-marker :coords="[47.096701, 37.541300]" marker-type:='Circle' marker-id="666" cluster-name="1" />
             <ymap-marker :coords="[47.096701, 45.541300]" marker-type:='Circle' marker-id="666" cluster-name="1" />
             
@@ -82,6 +82,17 @@ export default {
         ].join(''),
       },
     },
+    news: {
+      id: '',
+      title: 'Пизда',
+      text: '',
+      date: '',
+    }
+    }
+  },
+  methods:{
+    shownew(){
+      console.log('ПИЗДА')
     }
   }
 }
