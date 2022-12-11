@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ViewSet, ReadOnlyModelViewSet
 
+from collections import Counter
 from loguru import logger
 
 from .models import *
@@ -28,6 +29,63 @@ class getDetailedNews(APIView):
         seri = newsSerializer(objects, many=True)
         data = seri.data
         return Response(data)
+
+class topNews(APIView):
+    def get(self, request):
+        news = News.objects.all()
+        seria = newsSerializer(news, many=True)
+        data = seria.data
+
+        tags = []
+        persons = []
+        organizations = []
+        locations = []
+
+        for subdata in data:
+            tags.extend([tag['name'] for tag in subdata['tags']])
+            persons.extend([tag['name'] for tag in subdata['persons']])
+            organizations.extend([tag['name'] for tag in subdata['organizations']])
+            locations.extend([tag['name'] for tag in subdata['locations']])
+
+        tags = Counter(tags).most_common(5)
+        organizations = Counter(organizations).most_common(5)
+        persons = Counter(persons).most_common(5)
+        locations = Counter(locations).most_common(5)
+        
+        tag_labels = []
+        tag_count = []
+        for tuple_ in tags:
+            tag_labels.append(tuple_[0])
+            tag_count.append(tuple_[1])
+
+        organizations_labels = []
+        organizations_count = []
+        for tuple_ in organizations:
+            organizations_labels.append(tuple_[0])
+            organizations_count.append(tuple_[1])
+
+        persons_labels = []
+        persons_count = []
+        for tuple_ in persons:
+            persons_labels.append(tuple_[0])
+            persons_count.append(tuple_[1])
+
+        locations_labels = []
+        locations_count = []
+        for tuple_ in locations:
+            locations_labels.append(tuple_[0])
+            locations_count.append(tuple_[1])
+
+        return JsonResponse(data={
+            'tag_labels': tag_labels,
+            'tag_count': tag_count,
+            'organizations_labels': organizations_labels,
+            'organizations_count': organizations_count,
+            'persons_labels': persons_labels,
+            'persons_count': persons_count,
+            'locations_label': locations_labels,
+            'location_count': locations_count
+        })
 
 class addNew(APIView):
     def post(self, request):
