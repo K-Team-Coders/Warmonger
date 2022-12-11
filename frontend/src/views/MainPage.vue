@@ -5,7 +5,7 @@
     <div class="px-12 pt-16">
       <div class="flex">
         <div class="w-2/3">
-          <div class="px-1">
+          <div @click="showall_news()" class="px-1">
             <h2 class="text-center font-rale font-bold text-4xl text-whitesmoke mb-3">
               Карта событий
             </h2>
@@ -19,16 +19,16 @@
             </yandex-map>
             <div class="mt-4 grid grid-cols-4 gap-4">
               <div class="bg-white">
-                <BarChart></BarChart>
+                <BarChart :chartData="chartData1"></BarChart>
               </div>
               <div class="bg-whitesmoke">
-                <BarChart></BarChart>
+                <BarChart :chartData="chartData2"></BarChart>
               </div>
               <div class="bg-whitesmoke">
-                <BarChart></BarChart>
+                <BarChart :chartData="chartData3"></BarChart>
               </div>
               <div class="bg-whitesmoke">
-                <BarChart></BarChart>
+                <BarChart :chartData="chartData4"></BarChart>
               </div>
             </div>
           </div>
@@ -39,16 +39,16 @@
               Последние события
             </h2>
             <div class="px-2 border-opacity-80 border-2 border-red-800">
-              <select id="countries"
+              <!-- <select id="countries"
                 class="px-6 mt-2 text-idealblack border-red-900 border-2 text-lg rounded-lg block w-full p-2">
                 <option selected>Выберите тему </option>
                 <option>Путин</option>
                 <option>Путин</option>
                 <option>Путин</option>
-              </select>
+              </select> -->
               <div class="mt-2 bg-idealblack h-screen overflow-y-scroll">
                 <div class="px-6 pb-4 text-2xl font-rale font-medium">
-                  <div @click="sendid(item.id)" v-for="item in news" :key='item.id'
+                  <div  v-for="item in news" :key='item.id'
                     class=" w-full p-2 border-b-2 text-whitesmoke hover:text-red-400 border-red-800 hover:border-gray-400 transition">
                     <p class="font-bold">{{ item.date }}</p>
                     <p class="">
@@ -89,9 +89,48 @@ export default {
 
   data() {
     return {
+      chartData1: {
+        labels: [ '1', '2', '3', '4', '5'],
+        datasets: [
+          {
+            label: 'Топ локаций по событиям',
+            backgroundColor: '#ba4949',
+            data: [40, 20, 12, 45, 42]
+          }
+        ]
+      },
+      chartData2: {
+        labels: [ '1', '2', '3', '4', '5'],
+        datasets: [
+          {
+            label: 'Топ персон по событиям',
+            backgroundColor: '#a8b6de',
+            data: [40, 20, 12, 75, 87]
+          }
+        ]
+      },
+      chartData3: {
+        labels: [ '1', '2', '3', '4', '5'],
+        datasets: [
+          {
+            label: 'Топ организаций по событиям', 
+            backgroundColor: '#982e48',
+            data: [40, 20, 12, 45, 42]
+          }
+        ]
+      },
+      chartData4: {
+        labels: [ '1', '2', '3', '4', '5'],
+        datasets: [
+          {
+            label: 'Топ тегов по событиям',
+            backgroundColor: '#efdcce',
+            data: [40, 20, 12, 45, 42]
+          }
+        ]
+      },
       coords: [55.753215, 46.622504],
       settings: settings,
-      newsEnabled: false,
 
       clusterOptions: {
         1: {
@@ -178,19 +217,52 @@ export default {
           }
         );
         console.log(this.news)
+      }),
+      axios.get('http://127.0.0.1:8000/main/topNews/')
+      .then(response => {
+        this.chartData1.labels = response.data.locations_label
+        this.chartData1.datasets[0].data = response.data.location_count
+
+        this.chartData2.labels = response.data.persons_labels
+        this.chartData2.datasets[0].data = response.data.persons_count
+
+        this.chartData3.labels = response.data.organizations_labels
+        this.chartData3.datasets[0].data = response.data.organizations_count
+
+        this.chartData4.labels = response.data.tag_labels
+        this.chartData4.datasets[0].data = response.data.tag_count
       })
   },
   methods: {
-    sendid(itemid) {
-      console.log(itemid)
-      axios
-        .get('http://127.0.0.1:8000/main/getDetailNews/' + news.id+ '/?format=json')
-        .then(response => {
-          console.log(this.news.id)
-        
-        }
-        )
-    }
+    // sendid(itemid) {
+    //   console.log(itemid)
+    //   axios
+    //     .get('http://127.0.0.1:8000/main/getDetailNews/' + itemid + '/?format=json')
+    //     .then(response => {
+          
+    //       this.maplocations = this.maplocations.splice(0, this.maplocations.length, response.data[0].locations)
+    //       console.log(this.maplocations)
+    
+    //     }
+    //     )
+    // },
+    // showall_news(){
+    //   axios
+    //   .get('http://127.0.0.1:8000/main/getAllNews/?format=json')
+    //   .then(response => {
+    //     response.data.forEach(
+    //       element => {
+    //         this.news.push(element)
+    //         element.locations.forEach(
+    //           subelement => {
+    //             this.maplocations.push(subelement)
+    //           }
+    //         )
+    //       }
+    //     );
+    //     console.log(this.news)
+    //   })
+    // }
   }
 }
 </script>
