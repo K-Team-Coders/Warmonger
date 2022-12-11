@@ -4,14 +4,14 @@ import datetime
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
 
+from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
+from rest_framework.viewsets import ViewSet, ReadOnlyModelViewSet
 
 from loguru import logger
 
 from .models import *
 from .serializers import *
-
 
 class getAllNews(ReadOnlyModelViewSet):
     queryset = News.objects.all()
@@ -21,10 +21,13 @@ class getAllTags(ReadOnlyModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = tagSerializer
 
-class getNewsByTags(APIView):
-    def get(self, request):
-        pass
-
+class getDetailedNews(APIView):
+    
+    def get(self, request, pk):
+        objects = News.objects.filter(pk=pk)
+        seri = newsSerializer(objects, many=True)
+        data = seri.data
+        return Response(data)
 
 class addNew(APIView):
     def post(self, request):
