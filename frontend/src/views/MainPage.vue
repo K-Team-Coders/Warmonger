@@ -156,7 +156,7 @@ export default {
     axios
       .get('http://127.0.0.1:8000/main/getAllNews/?format=json')
       .then(response => {
-        response.data.forEach(element => this.news);
+        response.data.forEach(element => console.log(this.news.push(element)));
         console.log(this.news)
       })
   },

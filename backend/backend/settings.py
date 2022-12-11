@@ -101,7 +101,7 @@ load_dotenv(path)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'django3',                      
+        'NAME': os.getenv('NAME'),                      
         'USER': os.getenv('USER'),
         'PASSWORD': os.getenv('PASSWORD'),
         'HOST': os.getenv('HOST'),
