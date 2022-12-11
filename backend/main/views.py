@@ -2,12 +2,20 @@ import json
 import datetime
 
 from django.http import HttpResponse, JsonResponse
+from django.shortcuts import get_object_or_404
 
 from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
 
 from loguru import logger
 
 from .models import *
+
+class detailedNewsView(APIView):
+    def get(self, request, pk):
+        data = get_object_or_404(News, pk=pk)
+        logger.debug(data.id)
+        return HttpResponse(status=200)
 
 class addNew(APIView):
     def post(self, request):
@@ -74,7 +82,7 @@ class addNew(APIView):
         organizations = data['organizations']
         organizationObjects = []
         if organizations:
-            organizationObjects = [organizationsDB(organization['name'], organization['nickname']) for organization in organizations]
+            organizationObjects = [organizationsDB(organization['name'], organization['site']) for organization in organizations]
         logger.success(organizationObjects)
 
         persons = data['persons']
@@ -93,8 +101,9 @@ class addNew(APIView):
         # Ключевые слова,помогающие понять о чем говорят в новости
         tags = []
         tags.extend(keywords)
-        tags.extend(organizations)
-        tags.extend(persons)
+        tags.extend([organization['name'] for organization in organizations])
+        tags.extend([person['name'] for person in persons])
+
         tagObjects = [tagsDB(tag) for tag in tags]
         logger.success(tagObjects)
 
@@ -103,7 +112,6 @@ class addNew(APIView):
         date  = datetime.datetime.strptime(data['date'][:len(data['date']) - 6], '%Y-%m-%d %H:%M:%S')
         source = data['source']
         
-        logger.error(a.id for a in locationObjects)
         newsObject, isCreated = News.objects.get_or_create(
             title = title,
             text = text,
@@ -113,10 +121,18 @@ class addNew(APIView):
         logger.success(newsObject)
         if isCreated:
             newsObject.save()
-            newsObject.persons.add(personObjects)
-            newsObject.organisations.add(organizationObjects)
-            newsObject.tags.add(tagObjects)
-            newsObject.locations.add(locationObjects)
+            if personObjects:
+                for obj in personObjects:
+                    newsObject.persons.add(obj)
+            if organizationObjects:
+                for obj in organizationObjects:
+                    newsObject.organisations.add(obj)
+            if tagObjects:
+                for obj in tagObjects:
+                    newsObject.tags.add(obj)
+            if locationObjects:
+                for obj in locationObjects:
+                    newsObject.locations.add(obj)
             
             return HttpResponse(status=201)
         else:

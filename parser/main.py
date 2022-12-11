@@ -2,6 +2,7 @@ import pathlib
 import os
 import requests
 import asyncio
+import time
 
 from geopy.geocoders import Nominatim
 from pymystem3 import Mystem
@@ -22,10 +23,8 @@ def namedEntityRecognition(languageModel, text: str):
     '''
     Вычленение именнованных сущностей
     '''
-    # Мусорные отрывки определения сущностей, нужны в целях незахломления базы данных
-    rubbish = ['me / joinchat', 'telegram', 'com']
     # Ключевые слова, можете добавлять ЧТО УГОДНО. Хоть сирию, хоть украину, хоть лесные пожары, взрывы и т.п.
-    needle = ['поставки', 'вооружение', 'бронетехника', 'авиация', 'техника', 'помошь', 'средства', 'танки', 'оружие']
+    needle = ['поставки', 'удар', 'пво', 'оккупант', 'ракеты', 'взрывы', 'Киев', 'инфраструктура' 'БПЛА', 'дрон', 'снайпер', "артиллерия", 'вооружение', 'бронетехника', 'авиация', 'техника', 'помошь', 'средства', 'танки', 'оружие']
 
     lemmtext = lemmatizeText(text)
     k = languageModel(lemmtext)
@@ -36,17 +35,12 @@ def namedEntityRecognition(languageModel, text: str):
     keywords = []
 
     for i in k.ents:
-        check = True
-        for x in rubbish:
-            if x in i.text:
-                check = False
-        if check:
-            if i.label_ == 'LOC':
-                locs.append(i.text)
-            if i.label_ == 'ORG':
-                orgs.append(i.text)
-            if i.label_ == 'PER':
-                persons.append(i.text)
+        if i.label_ == 'LOC':
+            locs.append(i.text)
+        if i.label_ == 'ORG':
+            orgs.append(i.text)
+        if i.label_ == 'PER':
+            persons.append(i.text)
 
     for keyword in needle:
         if keyword in lemmtext:
@@ -75,7 +69,7 @@ class ParserOrganizer():
         # Геолокатор по названию и населенным пунктам. Позволяет вернуть координаты
         self.loc = Nominatim(user_agent="GetLoc")
 
-
+        self.filterEnabled = False;
 
     def setChannels(self, channels: list):
         '''
@@ -127,20 +121,67 @@ class ParserOrganizer():
         '''
         Установление деятельности организации и другой информации по аналогии с локациями
         '''
-        pass
+        if len(organization) > 90:
+            organization = organization[:90]
+            
+        return {
+            'name': organization,
+            'site': ' ',
+        }
 
     def definePerson(self, person: str):
         '''
         Установление информации о найденных личностях
         '''
-        pass
+        return {
+            'name': person,
+            'nickname': ' ',
+        }
     
     async def run(self) -> list:
         '''
         Работа тг парсера и надстроек для определния целевых полей в БД, и дальнейшая передача на админку информации о текущей остановке
         '''
-        for query in self.searchQuery: 
-            self.telegramParser.setSearchQuery(query)
+        if self.filterEnabled:
+            for query in self.searchQuery: 
+                self.telegramParser.setSearchQuery(query)
+                data = await self.telegramParser.run()
+                for chatdata in data:
+                    for new in chatdata:
+                        # Вычленяем из новостей информацию
+                        # Source
+                        source = 'https://t.me//' + str(new[0])
+                        # Date
+                        date = new[1]
+                        # Text
+                        text = new[2]
+
+                        locs, orgs, persons, keywords = namedEntityRecognition(self.ruModel, text)
+                        
+                        locs = [self.defineLocation(loc) for loc in locs]
+                        orgs = [self.defineOrganization(org) for org in orgs]
+                        persons = [self.definePerson(person) for person in persons]
+
+                        logger.debug(locs)
+                        logger.debug(orgs)
+                        logger.debug(persons)
+                        
+                        title = text
+                        if len(text) > 50:
+                            title = text[:50]                        
+
+                        time.sleep(1)
+                        requests.post('http://127.0.0.1:8000/main/addNews/', json={
+                            'title': title,
+                            'text': text,
+                            'locations': locs,
+                            'organizations': orgs,
+                            'persons': persons,
+                            'date': str(date),
+                            'source': source,
+                            'keywords': keywords
+                        })
+        else:
             data = await self.telegramParser.run()
             for chatdata in data:
                 for new in chatdata:
@@ -154,11 +195,14 @@ class ParserOrganizer():
 
                     locs, orgs, persons, keywords = namedEntityRecognition(self.ruModel, text)
                     locs = [self.defineLocation(loc) for loc in locs]
-
+                    orgs = [self.defineOrganization(org) for org in orgs]
+                    persons = [self.definePerson(person) for person in persons]
+                    
                     title = text
                     if len(text) > 50:
                         title = text[:50]                        
 
+                    time.sleep(1)
                     requests.post('http://127.0.0.1:8000/main/addNews/', json={
                         'title': title,
                         'text': text,
@@ -177,7 +221,8 @@ organizer = ParserOrganizer(os.path.join(path, 'TELETHONE.env'))
 Эти параметры вы можете менять как хотите. В соответствии с требованиями Вашего заказчика. 
 '''
 organizer.setChannels(['https://t.me/insiderUKR'])
-organizer.setSearchQuery(['вооружение'])
+# organizer.setSearchQuery(['вооружение'])
 organizer.setTimeBorders(datetime.date(2022, 12, 9), datetime.date(2022, 12, 11))
 
 data = asyncio.run(organizer.run())
+
