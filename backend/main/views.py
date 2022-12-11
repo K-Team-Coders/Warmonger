@@ -5,17 +5,26 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
 
 from rest_framework.views import APIView
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 
 from loguru import logger
 
 from .models import *
+from .serializers import *
 
-class detailedNewsView(APIView):
-    def get(self, request, pk):
-        data = get_object_or_404(News, pk=pk)
-        logger.debug(data.id)
-        return HttpResponse(status=200)
+
+class getAllNews(ReadOnlyModelViewSet):
+    queryset = News.objects.all()
+    serializer_class = newsSerializer
+    
+class getAllTags(ReadOnlyModelViewSet):
+    queryset = Tag.objects.all()
+    serializer_class = tagSerializer
+
+class getNewsByTags(APIView):
+    def get(self, request):
+        pass
+
 
 class addNew(APIView):
     def post(self, request):
