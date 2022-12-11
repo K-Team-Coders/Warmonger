@@ -131,3 +131,5 @@ dmypy.json
 .pyre/
 *.txt
 Session.session
+CREDENTIALS.env
+CREDENTIALS.env
