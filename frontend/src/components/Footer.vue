@@ -1,9 +1,8 @@
 <template>
-<footer class="text-center bg-white text-black py-1">
-  <div class="container pt-6 ">
-    <div class="flex justify-end mb-6"> 
-      <p class="flex text-lg mt-2 mr-2 font-rale">See on GitHUB:</p>
-      <a href="https://github.com/K-Team-Coders/Warmonger" target="_blank" type="button" class="rounded-lg border-2 border-black text-black leading-normal uppercase hover:bg-black hover:bg-opacity-80 hover:text-white focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-1/12 h-10">
+<footer class="text-center text-black ">
+  <div class="pt-6">
+    <div class="flex justify-center"> 
+      <a href="https://github.com/K-Team-Coders/Warmonger" target="_blank" type="button" class="rounded-lg bg-red-800 border-2 border-whitesmoke text-whitesmoke leading-normal uppercase hover:bg-idealblack hover:border-whitesmoke hover:bg-opacity-80 hover:text-whitesmoke focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-32 h-12 m-6">
         <svg aria-hidden="true"
         focusable="false"
         data-prefix="fab"
