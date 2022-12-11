@@ -10,8 +10,9 @@
               Карта событий
             </h2>
             <yandex-map :coords="coords" :settings="settings" :zoom="5" :cluster-options="clusterOptions">
-              <ymap-marker v-for="item in news" :key="item.id"
-                :coords='[item.locations.latitude, item.locations.longitude]' :marker-id="item.id"
+              <ymap-marker v-for="item in maplocations" :key="item.id"
+                :coords= "[item.latitude, item.longitude]"
+                :marker-id="item.id"
                 :cluster-name="item.cluster" />
               
             </yandex-map>
@@ -105,6 +106,15 @@ export default {
         },
       },
       tags: [{ id: '', name: '' }],
+      maplocations: [
+            {
+              id: '',
+              name: '',
+              latitude: '',
+              longitude: '',
+              adress: '',
+            }
+          ],
       news: [
         {
           id: 1,
@@ -156,7 +166,16 @@ export default {
     axios
       .get('http://127.0.0.1:8000/main/getAllNews/?format=json')
       .then(response => {
-        response.data.forEach(element => console.log(this.news.push(element)));
+        response.data.forEach(
+          element => {
+            this.news.push(element)
+            element.locations.forEach(
+              subelement => {
+                this.maplocations.push(subelement)
+              }
+            )
+          }
+        );
         console.log(this.news)
       })
   },
