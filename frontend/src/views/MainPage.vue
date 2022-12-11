@@ -28,8 +28,13 @@
             >
               Последние события
             </h2>
-
-            <div  class="px-2  border-opacity-80 border-2 border-red-800">
+            <div class="px-2 border-opacity-80 border-2 border-red-800">
+                  <select id="countries" class="px-6 mt-2 text-idealblack border-red-900 border-2 text-lg rounded-lg block w-full p-2">
+                  <option selected>Выберите тему </option>
+                  <option>Путин</option>
+                  <option>Путин</option>
+                  <option>Путин</option>
+              </select>
               <div class="mt-2 bg-idealblack h-screen overflow-y-scroll">
                 <div class="px-6 pb-4 text-2xl font-rale font-medium">
                   <div  @click="shownewsinfo()" 
@@ -129,7 +134,7 @@ export default {
     }
   },
   mounted(){
-    
+
   },
   methods:{
 

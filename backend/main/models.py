@@ -50,7 +50,7 @@ class News(models.Model):
 
     locations = models.ManyToManyField(Location)
     persons = models.ManyToManyField(Person)
-    organisations = models.ManyToManyField(Organisation)
+    organizations = models.ManyToManyField(Organisation)
     tags = models.ManyToManyField(Tag)
 
     def __repr__(self) -> str:
