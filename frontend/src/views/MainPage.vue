@@ -1,8 +1,16 @@
 <template>
 <body>
 <Header></Header>
-<Carousel></Carousel>
-<Footer></Footer>
+<div class="px-20">
+  <div class="flex">
+    <div class="w-2/3 bg-gray-300">ss
+      <div class="w-full bg-green-200">s</div>
+    </div>
+    <div class="w-1/3 bg-red-200 ">s</div>
+  </div>
+
+</div>
+<Footer></Footer> 
 </body>
 </template>
 
