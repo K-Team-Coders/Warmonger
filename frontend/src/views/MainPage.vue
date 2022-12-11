@@ -11,11 +11,8 @@
               Карта событий
             </h2>
             <yandex-map :coords="coords" :settings="settings" :zoom="5" :cluster-options="clusterOptions">
-            <ymap-marker @click="shownew()" :coords="[47.096701, 65.541300]" marker-type:='Circle' marker-id="666" cluster-name="1"  />
-            <ymap-marker :coords="[47.096701, 37.541300]" marker-type:='Circle' marker-id="666" cluster-name="1" />
-            <ymap-marker :coords="[47.096701, 45.541300]" marker-type:='Circle' marker-id="666" cluster-name="1" />
-            
-    </yandex-map>
+            <ymap-marker v-for="item in news" :key="item.id" :coords="item.coords"  :marker-id="item.id" :cluster-name="item.cluster"  /> 
+            </yandex-map>
             <div class="mt-4 grid grid-cols-4 gap-4">
               <div class="bg-white"><BarChart></BarChart></div>
               <div class="bg-whitesmoke"><BarChart></BarChart></div>
@@ -31,16 +28,19 @@
             >
               Последние события
             </h2>
-            <div class="px-2  border-opacity-80 border-2 border-red-800">
+
+            <div  class="px-2  border-opacity-80 border-2 border-red-800">
               <div class="mt-2 bg-idealblack h-screen overflow-y-scroll">
                 <div class="px-6 pb-4 text-2xl font-rale font-medium">
-                  <div
-                    class="w-full p-2 border-b-2 text-whitesmoke hover:text-red-400 border-red-800 hover:border-gray-400 transition"
+                  <div  @click="shownewsinfo()" 
+                  v-for="item in news" :key="item.id" :class='{shake: newsEnabled}' class=" w-full p-2 border-b-2 text-whitesmoke hover:text-red-400 border-red-800 hover:border-gray-400 transition"
                   >
-                  <p class="font-bold">12.12.2020 12:05</p>
+                  <p class="font-bold">{{item.date}}</p>
                     <p class="">
-                      Медведев перечислил места нахождения врагов России
+                      {{item.title}}
                     </p>
+                    <p v-if="newsEnabled">{{item.text}}</p>
+
                   </div>
                 </div>
               </div>
@@ -75,6 +75,8 @@ export default {
     return {
       coords: [55.753215, 37.622504], 
       settings: settings,
+      newsEnabled: false,
+
       clusterOptions: {
       1: {
         clusterDisableClickZoom: true,
@@ -88,18 +90,49 @@ export default {
         ].join(''),
       },
     },
-    news: {
-      id: '',
-      title: 'Пизда',
-      text: '',
-      date: '',
-    }
+    news: [
+      {
+      id: 1,
+      title: 'Медведев съел Жору',
+      text: 'АЛьалуаьфуазщфлазцлллЗахар',
+      date: '222234',
+      locations: [
+        {
+        id: '',
+        name: '',
+        latitude: '',
+        longitude: '',
+        adress: '',
+      }
+    ],
+      persons: [
+        {
+          id:'',
+          name:'',
+          nickname:''
+        }
+      ],
+      organizations: [
+        {
+          id: '',
+          name: ''
+        }
+      ],
+      tags: {
+          id: '',
+          name: ''
+        },
+      source: '',
+      cluster: '1',
+      },
+  ]
     }
   },
+  mounted(){
+    
+  },
   methods:{
-    shownew(){
-      console.log('ПИЗДА')
-    }
+
   }
 }
 </script>
@@ -108,5 +141,33 @@ export default {
 .ymap-container {
   width: 100%;
   height: 100vh;
+}
+
+.shake {
+  animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  transform: translate3d(0, 0, 0);
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
 }
 </style>
