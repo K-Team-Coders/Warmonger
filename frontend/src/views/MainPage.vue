@@ -13,7 +13,8 @@
               <ymap-marker v-for="item in maplocations" :key="item.id"
                 :coords= "[item.latitude, item.longitude]"
                 :marker-id="item.id"
-                :cluster-name="item.cluster" />
+                :cluster-name="item.cluster"
+                :balloon="{header: item.name}" />
               
             </yandex-map>
             <div class="mt-4 grid grid-cols-4 gap-4">
