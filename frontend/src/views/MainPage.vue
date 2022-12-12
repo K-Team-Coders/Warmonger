@@ -5,7 +5,7 @@
     <div class="px-12 pt-16">
       <div class="flex">
         <div class="w-2/3">
-          <div  class="px-1">
+          <div class="px-1">
             <h2 class="text-center font-rale font-bold text-4xl text-whitesmoke mb-3">
               Карта событий
             </h2>
@@ -45,11 +45,11 @@
               </select> -->
               <div class="mt-2 bg-idealblack h-screen overflow-y-scroll">
                 <div class="px-6 pb-4 text-sm font-rale font-medium">
-                  <div @click="sendid(item.id)" v-for="item in news" :key='item.id'
+                  <div v-for="item in news" :key='item.id'
                     class=" w-full p-2 border-b-2 text-whitesmoke hover:text-red-400 border-red-800 hover:border-gray-400 transition">
                     <p class="font-bold">{{ item.date }}</p>
-                    <p >
-                      {{item.id }}) {{ item.title }}
+                    <p>
+                      {{ item.id }}) {{ item.title }}
                     </p>
                     <p>{{ item.text }}</p>
 
@@ -64,9 +64,9 @@
         </div>
 
       </div>
-      <div class="text-gray-900 font-base text-3xl mb-2 font-rale text-center border-b ">
-        <p class="border-b text-whitesmoke mb-3 border-red-800">Граф отношений событий</p>
-        <svg width="960" height="600" class="container-border"></svg>
+      <p class="flex justify-center text-gray-900 font-base text-3xl mb-2 font-rale text-center border-b text-whitesmoke mb-3 border-red-800">Граф отношений событий</p>
+      <div class="flex justify-center text-gray-900 font-base text-3xl mb-2 font-rale text-center border-b ">
+        <svg  width="960" height="600" class=" container-border bg-whitesmoke"></svg>
       </div>
     </div>
 
@@ -75,12 +75,13 @@
 </template>
 
 <script>
+import * as d3 from 'd3'
 import axios from 'axios'
 import Header from '../components/Header.vue'
 import Footer from '../components/Footer.vue'
 import Carousel from '../components/Carousel.vue'
 import BarChart from '../components/charts/BarChart.vue'
-import * as d3 from 'd3'
+
 
 import { yandexMap, ymapMarker } from 'vue-yandex-maps'
 const settings = {
@@ -239,11 +240,11 @@ export default {
           this.chartData4.labels = response.data.tag_labels
           this.chartData4.datasets[0].data = response.data.tag_count
         }),
-      axios.get('http://127.0.0.1:8000/main/topNews/')
+      axios.get('http://127.0.0.1:8000/main/getNewsRelations/')
         .then(response => {
-          let nodes2 = response.data.nodes1234
+          let nodes2 = response.data.nodes
           console.log(nodes2)
-          let edges = response.data.edges1234
+          let edges = response.data.relations
           console.log(edges)
           let marge = { top: 60, bottom: 60, left: 60, right: 60 }
           let svg = d3.select('svg')
@@ -274,7 +275,7 @@ export default {
           forceSimulation.force('link')
             .links(edges)
             .distance(function (d) { // side length / 每一边的长度
-              return d.value * 100
+              return d.value * 10
             })
           // Set drawing center location
           forceSimulation.force('center')
@@ -289,18 +290,22 @@ export default {
             .attr('stroke', function (d, i) {
               return colorScale(i)
             })
-            .attr('stroke-width', 1)
+            .attr('stroke-width', 2)
           // Text on side
           let linksText = g.append('g')
             .selectAll('text')
+            
             .data(edges)
             .enter()
             .append('text')
+            
             .text(function (d) {
               return d.relation
             })
+            
           // Create group
           let gs = g.selectAll('.circleText')
+            
             .data(nodes2)
             .enter()
             .append('g')
@@ -322,6 +327,7 @@ export default {
             })
           // Draw text
           gs.append('text')
+            
             .attr('x', -10)
             .attr('y', -20)
             .attr('dy', 10)
@@ -364,11 +370,11 @@ export default {
               forceSimulation.alphaTarget(0)
             }
             d.fx = null
-            d.fy = null}
-        })
-        
+            d.fy = null
+          }
+        }) 
 },
-methods:  { 
+methods: {
   sendid(itemid) {
     console.log(itemid)
     axios
@@ -382,22 +388,22 @@ methods:  {
   },
   showall_news(){
     axios
-    .get('http://127.0.0.1:8000/main/getAllNews/?format=json')
-    .then(response => {
-      response.data.forEach(
-        element => {
-          this.news.push(element)
-          element.locations.forEach(
-            subelement => {
-              this.maplocations.push(subelement)
-            }
-          )
-        }
-      );
-      console.log(this.news)
-    })
+      .get('http://127.0.0.1:8000/main/getAllNews/?format=json')
+      .then(response => {
+        response.data.forEach(
+          element => {
+            this.news.push(element)
+            element.locations.forEach(
+              subelement => {
+                this.maplocations.push(subelement)
+              }
+            )
+          }
+        );
+        console.log(this.news)
+      })
   }
-  }}
+}}
 </script>
 
 <style>

@@ -131,16 +131,16 @@ class relationNews(APIView):
                 relations.append({
                     'source': current_source,
                     'target': current_destenation,
-                    'relation': subdata['source'],
-                    'value': 2
+                    'relation': ' ',
+                    'value': 20
                 })
             for person in subdata['persons']:
                 current_destenation = names.index(person['name'])
                 relations.append({
                     'source': current_source,
                     'target': current_destenation,
-                    'relation': subdata['source'],
-                    'value': 2
+                    'relation': 'PER',
+                    'value': 20
                 })
 
             for org in subdata['organizations']:
@@ -148,8 +148,8 @@ class relationNews(APIView):
                 relations.append({
                     'source': current_source,
                     'target': current_destenation,
-                    'relation': subdata['source'],
-                    'value': 2
+                    'relation': 'ORG',
+                    'value': 20
                 })
 
             for loc in subdata['locations']:
@@ -157,8 +157,8 @@ class relationNews(APIView):
                 relations.append({
                     'source': current_source,
                     'target': current_destenation,
-                    'relation': subdata['source'],
-                    'value': 2
+                    'relation': 'LOC',
+                    'value': 20
                 })
         
         return JsonResponse({
