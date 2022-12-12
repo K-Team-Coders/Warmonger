@@ -123,7 +123,10 @@ class ParserOrganizer():
         '''
         if len(organization) > 90:
             organization = organization[:90]
-            
+
+        # В процессе разработки 
+        # import wikipedia
+        # ny = wikipedia.page("Военно космическая академия имени А.Ф. Можайского")
         return {
             'name': organization,
             'site': ' ',

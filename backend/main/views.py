@@ -87,6 +87,85 @@ class topNews(APIView):
             'location_count': locations_count
         })
 
+class relationNews(APIView):
+
+    def get(self, request):
+        objects = News.objects.all()
+        seria = newsSerializer(objects, many=True)
+        data = seria.data
+        
+        node = []
+
+        for subdata in data:
+            node.append({"name": subdata['title']})
+
+            for tag in subdata['tags']:
+                node.append({"name": tag['name']})
+            
+            for person in subdata['persons']:
+                node.append({'name': person['name']})
+
+            for org in subdata['organizations']:
+                node.append({"name": org['name']})
+
+            for loc in subdata['locations']:
+                node.append({"name": loc['name']})
+
+        names = []
+        uniques = []
+
+        for item in node:
+            if item['name'] not in names:
+                names.append(item['name'])
+                uniques.append(item)
+
+        relations = []
+
+        for subdata in data:
+            current_source = names.index(subdata['title'])
+            logger.debug(current_source)
+
+
+            for tag in subdata['tags']:
+                current_destenation = names.index(tag['name'])
+                relations.append({
+                    'source': current_source,
+                    'target': current_destenation,
+                    'relation': subdata['source'],
+                    'value': 2
+                })
+            for person in subdata['persons']:
+                current_destenation = names.index(person['name'])
+                relations.append({
+                    'source': current_source,
+                    'target': current_destenation,
+                    'relation': subdata['source'],
+                    'value': 2
+                })
+
+            for org in subdata['organizations']:
+                current_destenation = names.index(org['name'])
+                relations.append({
+                    'source': current_source,
+                    'target': current_destenation,
+                    'relation': subdata['source'],
+                    'value': 2
+                })
+
+            for loc in subdata['locations']:
+                current_destenation = names.index(loc['name'])
+                relations.append({
+                    'source': current_source,
+                    'target': current_destenation,
+                    'relation': subdata['source'],
+                    'value': 2
+                })
+        
+        return JsonResponse({
+            'nodes': uniques, 
+            'relations': relations
+            })
+
 class addNew(APIView):
     def post(self, request):
 
