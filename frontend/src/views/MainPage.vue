@@ -64,9 +64,9 @@
         </div>
 
       </div>
-      <div class="bg-whitesmoke text-gray-900 font-base text-3xl mb-2 font-rale text-center border-b ">
-        <p class="border-b text-whitesmoke mb-3 border-red-800">Граф отношений событий</p>
-        <svg width="960" height="600" class="container-border"></svg>
+      <p class="flex justify-center text-gray-900 font-base text-3xl mb-2 font-rale text-center border-b text-whitesmoke mb-3 border-red-800">Граф отношений событий</p>
+      <div class="flex justify-center text-gray-900 font-base text-3xl mb-2 font-rale text-center border-b ">
+        <svg  width="960" height="600" class=" container-border bg-whitesmoke"></svg>
       </div>
     </div>
 
@@ -275,7 +275,7 @@ export default {
           forceSimulation.force('link')
             .links(edges)
             .distance(function (d) { // side length / 每一边的长度
-              return d.value * 100
+              return d.value * 10
             })
           // Set drawing center location
           forceSimulation.force('center')
@@ -290,18 +290,22 @@ export default {
             .attr('stroke', function (d, i) {
               return colorScale(i)
             })
-            .attr('stroke-width', 1)
+            .attr('stroke-width', 2)
           // Text on side
           let linksText = g.append('g')
             .selectAll('text')
+            
             .data(edges)
             .enter()
             .append('text')
+            
             .text(function (d) {
               return d.relation
             })
+            
           // Create group
           let gs = g.selectAll('.circleText')
+            
             .data(nodes2)
             .enter()
             .append('g')
@@ -323,6 +327,7 @@ export default {
             })
           // Draw text
           gs.append('text')
+            
             .attr('x', -10)
             .attr('y', -20)
             .attr('dy', 10)
