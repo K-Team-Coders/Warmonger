@@ -132,7 +132,7 @@ class relationNews(APIView):
                     'source': current_source,
                     'target': current_destenation,
                     'relation': 'TAG',
-                    'value': 2
+                    'value': 20
                 })
             for person in subdata['persons']:
                 current_destenation = names.index(person['name'])
@@ -140,7 +140,7 @@ class relationNews(APIView):
                     'source': current_source,
                     'target': current_destenation,
                     'relation': 'PER',
-                    'value': 2
+                    'value': 20
                 })
 
             for org in subdata['organizations']:
@@ -149,7 +149,7 @@ class relationNews(APIView):
                     'source': current_source,
                     'target': current_destenation,
                     'relation': 'ORG',
-                    'value': 2
+                    'value': 20
                 })
 
             for loc in subdata['locations']:
@@ -158,7 +158,7 @@ class relationNews(APIView):
                     'source': current_source,
                     'target': current_destenation,
                     'relation': 'LOC',
-                    'value': 2
+                    'value': 20
                 })
         
         return JsonResponse({
