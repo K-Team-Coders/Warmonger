@@ -7,12 +7,6 @@ const routes = [
     
     component: () => import(/* webpackChunkName: "about" */ '../views/MainPage.vue')
   },
-  {
-    path: '/Chart/',
-    name: 'Chart',
-    
-    component: () => import(/* webpackChunkName: "about" */ '../views/ChartPage.vue')
-  },
 ]
 
 const router = createRouter({
