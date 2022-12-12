@@ -131,7 +131,7 @@ class relationNews(APIView):
                 relations.append({
                     'source': current_source,
                     'target': current_destenation,
-                    'relation': 'TAG',
+                    'relation': ' ',
                     'value': 20
                 })
             for person in subdata['persons']:
