@@ -7,6 +7,7 @@ __pycache__/
 *.so
 
 # Distribution / packaging
+.idea
 .Python
 build/
 develop-eggs/
@@ -25,6 +26,7 @@ share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+*.env
 MANIFEST
 
 # PyInstaller
@@ -129,3 +131,5 @@ dmypy.json
 .pyre/
 *.txt
 Session.session
+CREDENTIALS.env
+CREDENTIALS.env

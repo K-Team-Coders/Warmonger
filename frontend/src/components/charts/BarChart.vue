@@ -14,11 +14,11 @@ export default {
   data() {
     return {
       chartData: {
-        labels: [ 'JOIN', 'SELECT', 'March'],
+        labels: [ 'Игорь', 'Артем', 'Жора'],
         datasets: [
           {
-            label: 'Data One',
-            backgroundColor: '#293857',
+            label: 'Уровень тупости',
+            backgroundColor: '#ba4949',
             data: [40, 20, 12]
           }
         ]

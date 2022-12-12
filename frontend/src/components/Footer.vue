@@ -1,9 +1,8 @@
 <template>
-<footer class="text-center bg-dark-gray text-white py-1">
-  <div class="container px-6 pt-6 mr-64 ">
-    <div class="flex justify-center mb-6"> 
-      <p class="flex text-lg mt-8 mr-2 font-rale">See on GitHUB:</p>
-      <a href="https://github.com/K-Team-Coders/AnyHack" target="_blank" type="button" class="rounded-lg border-2 border-white text-white leading-normal uppercase hover:bg-white hover:bg-opacity-10 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-1/4 h-20 m-1">
+<footer class="text-center text-black ">
+  <div class="pt-6">
+    <div class="flex justify-center"> 
+      <a href="https://github.com/K-Team-Coders/Warmonger" target="_blank" type="button" class="rounded-lg border-2 border-whitesmoke text-whitesmoke leading-normal uppercase hover:bg-red-800 hover:text-whitesmoke focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-32 h-12 m-6">
         <svg aria-hidden="true"
         focusable="false"
         data-prefix="fab"
