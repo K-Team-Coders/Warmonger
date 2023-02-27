@@ -16,7 +16,7 @@
       aria-label="Slide 2"
     ></button>
   </div>
-  <div class="carousel-inner relative w-full overflow-hidden">
+  <div class="carusel-inner relative w-full overflow-hidden">
     <div class="carousel-item active relative float-left w-full">
       <img
         src="https://mdbootstrap.com/img/Photos/Slides/img%20(23).jpg"
