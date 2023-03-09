@@ -1,11 +1,16 @@
 <template>
     <yandex-map :coords="coords" :settings="settings" :zoom="5" :cluster-options="clusterOptions">
-              <ymap-marker v-for="item in maplocations" :key="item.id" :coords="[item.latitude, item.longitude]"
-                :marker-id="item.id" :cluster-name="1" :balloon="{ header: item.adress }" />
+             <!-- <ymap-marker 
+      :coords="coords" 
+      marker-id="123" 
+      hint-content="some hint" 
+    /> -->
+              <ymap-marker v-for="uav in allUAVs" :key="uav.id" marker-type="circle" :marker-id="uav.id" :coords="uav.coords" :marker-fill="markerfill" :marker-stroke="markerstroke" circle-radius="1000000" />
             </yandex-map>
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 import { yandexMap, ymapMarker } from 'vue-yandex-maps'
 const settings = {
   apiKey: '06856716-badb-42a6-9815-4c8e630af04b',
@@ -17,48 +22,9 @@ const settings = {
 
 export default {
     components: { yandexMap, ymapMarker },
+    computed: mapGetters(["allUAVs"]),
 data() {
     return {
-      chartData1: {
-        labels: ['1', '2', '3', '4', '5'],
-        datasets: [
-          {
-            label: 'Топ локаций по событиям',
-            backgroundColor: '#ba4949',
-            data: [40, 20, 12, 45, 42]
-          }
-        ]
-      },
-      chartData2: {
-        labels: ['1', '2', '3', '4', '5'],
-        datasets: [
-          {
-            label: 'Топ персон по событиям',
-            backgroundColor: '#a8b6de',
-            data: [40, 20, 12, 75, 87]
-          }
-        ]
-      },
-      chartData3: {
-        labels: ['1', '2', '3', '4', '5'],
-        datasets: [
-          {
-            label: 'Топ организаций по событиям',
-            backgroundColor: '#982e48',
-            data: [40, 20, 12, 45, 42]
-          }
-        ]
-      },
-      chartData4: {
-        labels: ['1', '2', '3', '4', '5'],
-        datasets: [
-          {
-            label: 'Топ тегов по событиям',
-            backgroundColor: '#efdcce',
-            data: [40, 20, 12, 45, 42]
-          }
-        ]
-      },
       coords: [55.753215, 46.622504],
       settings: settings,
 
@@ -74,6 +40,16 @@ data() {
             '</ul>',
           ].join(''),
         },
+      },
+      markerfill: {
+        enabled: true,
+        color: "#DB4521",
+        opacity: 0.8
+      },
+      markerstroke: {
+color: "#ffffff", 
+opacity: 0.8,
+ width: 5
       },
       tags: [{ id: '', name: '' }],
       maplocations: [
