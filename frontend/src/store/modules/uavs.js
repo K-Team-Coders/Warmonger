@@ -24,18 +24,33 @@ export default{
             coords: [55,88]
           }
         ],
-        countries_list: ['Russia', 'USA']
+        countries_list: ['Все страны'],
+        uavsToChoose: [],
+        choosed_country: ' ',
+        choosed_uav: ' ',
+
       },
       getters: {
         allUAVs(state) {
-            return state.UAV_list
+          return state.UAV_list
+        },
+        allCountries(state) {
+          return state.countries_list
+        },
+        allUAVsToChoose(state) {
+          return state.uavsToChoose
         }
       },
+      actions: {
+        async createCountriesList(ctx){
+          let countries_list = countries_list.push(UAV_list.forEach(element => {element.country}))
+          ctx.commit('updateCountriesList')
+        }},
       mutations: {
-        
+        updateCountriesList(state, countries_list) {
+          state.countries_list = countries_list
+        }
     
       },
-      actions: {
-        
-      },
-}
+      
+      }
