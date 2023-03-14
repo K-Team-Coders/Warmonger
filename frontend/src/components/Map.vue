@@ -3,7 +3,7 @@
     :coords="coords"
     :settings="settings"
     :zoom="5"
-    :cluster-options="clusterOptions"
+    @click="onClick"
   >
     <!-- <ymap-marker 
       :coords="coords" 
@@ -11,14 +11,12 @@
       hint-content="some hint" 
     /> -->
     <ymap-marker
-      v-for="uav in allUAVs"
-      :key="uav.id"
+    :coords="coords"
       marker-type="circle"
-      :marker-id="uav.id"
-      :coords="uav.coords"
+      marker-id="1"
       :marker-fill="markerfill"
       :marker-stroke="markerstroke"
-      circle-radius="1000000"
+      circle-radius="10000"
     />
   </yandex-map>
 </template>
@@ -47,19 +45,20 @@ export default {
         opacity: 0.8
       },
       markerstroke: {
-color: "#ffffff",
+color: "#000000",
 opacity: 0.8,
  width: 5
       },
     }},
     methods: {
-      mapActions(['createCountriesList']),
-      async mounted(){
-        this.createCountriesList();
-      }
-    }
+    onClick(e) {
+      this.coords = e.get('coords');
+    },
+  },
+}
+   
+    
 
-  }
 </script>
 
 <style>
