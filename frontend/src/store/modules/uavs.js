@@ -25,7 +25,6 @@ export default{
           }
         ],
         countries_list: ['Все страны', 'Russia', 'USA'],
-
         choosed_country: ' ',
         choosed_uav: ' ',
 
@@ -39,10 +38,16 @@ export default{
         },
       },
       actions: {
-
+        GET_ALLCOUNTRIES: async (context) => {
+          let {countries_list} = this.countries_list;
+          context.commit('SET_ALLCOUNTRIES', countries_list)
+        },
+          
       },
       mutations: {
-        
+          SET_ALLCOUNTRIES: (state, payload) => {
+            state.countries_list = payload;
+          },
     
       },
       

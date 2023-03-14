@@ -18,6 +18,14 @@
       :marker-stroke="markerstroke"
       circle-radius="10000"
     />
+    <ymap-marker
+    :coords="coords"
+      marker-type="circle"
+      marker-id="1"
+      :marker-fill="markerfill"
+      :marker-stroke="markerstroke"
+      circle-radius="10000"
+    />
   </yandex-map>
 </template>
 

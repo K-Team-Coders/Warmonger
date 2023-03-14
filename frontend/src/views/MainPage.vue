@@ -24,19 +24,17 @@
               class="px-2 border-opacity-80 border text-black border-gray-50"
             >
               <select
-                id="countries"
                 class="px-6 mt-2 text-idealblack border border-gray-100 text-lg rounded-lg block w-full p-2"
+                v-model="selected"
               >
-                <option selected>Выбор страны</option>
-                <option>Путина страна 1</option>
-                <option>Путина страна 2</option>
-                <option>Путина страна 3</option>
+                <option disabled value="">Выберите страну</option>
+                <option v-for="country in allCountries" :key="country"> {{country}}</option>
               </select>
               <div class="mt-4 h-screen">
                 <div
                   class="flex justify-center pb-2 items-center text-sm font-rale font-medium"
                 >
-                  <div class="flex flex-col justify-between p-3 leading-normal">
+                  <div class="flex flex-col justify-between p-3 hover:bg-sky-70 leading-normal">
                     <p class="text-lg font-bold tracking-tight text-white">
                       General Atomics MQ-1C Grey Eagle
                     </p>
@@ -76,13 +74,16 @@ import Footer from "../components/Footer.vue";
 import Graph from "../components/Graph.vue";
 import BarChart from "../components/charts/BarChart.vue";
 import Map from "../components/Map.vue";
-
+import { mapActions, mapGetters } from "vuex";
 export default {
   components: { Header, Footer, BarChart, Map, Graph },
-  methods: {
-   
-  },
-};
+  computed: mapGetters(["allCountries"]),
+  methods: mapActions(["GET_ALLCOUNTRIES"]),
+  async created(){
+      this.GET_ALLCOUNTRIES()
+      console.log(this.allCountries)
+    }
+  }
 </script>
 
 <style>
