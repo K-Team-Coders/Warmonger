@@ -1,72 +1,88 @@
 <template>
-  <yandex-map
-    :coords="coords"
-    :settings="settings"
-    :zoom="5"
-    @click="onClick"
-  >
-    <!-- <ymap-marker 
-      :coords="coords" 
-      marker-id="123" 
-      hint-content="some hint" 
-    /> -->
+  <yandex-map :coords="coords" :settings="settings" :zoom="5" @click="onClick">
     <ymap-marker
-    :coords="coords"
+      :coords="coords"
       marker-type="circle"
       marker-id="1"
-      :marker-fill="markerfill"
-      :marker-stroke="markerstroke"
+      :marker-fill="markerfill_out"
+      :marker-stroke="markerstroke_out"
       circle-radius="10000"
     />
     <ymap-marker
-    :coords="coords"
+      :coords="coords"
       marker-type="circle"
       marker-id="1"
-      :marker-fill="markerfill"
-      :marker-stroke="markerstroke"
-      circle-radius="10000"
+      :marker-fill="markerfill_in"
+      :marker-stroke="markerstroke_in"
+      circle-radius="5000"
+    />
+    <ymap-marker
+      :coords="coords"
+      marker-type="circle"
+      marker-id="1"
+      :marker-fill="markerfill_center"
+      :marker-stroke="markerstroke_center"
+      circle-radius="1"
     />
   </yandex-map>
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex'
-import { yandexMap, ymapMarker } from 'vue-yandex-maps'
+import { mapGetters, mapActions } from "vuex";
+import { yandexMap, ymapMarker } from "vue-yandex-maps";
 const settings = {
-  apiKey: '06856716-badb-42a6-9815-4c8e630af04b',
-  lang: 'ru_RU',
-  coordorder: 'latlong',
+  apiKey: "06856716-badb-42a6-9815-4c8e630af04b",
+  lang: "ru_RU",
+  coordorder: "latlong",
   enterprise: false,
-  version: '2.1'
-}
+  version: "2.1",
+};
 
 export default {
-    components: { yandexMap, ymapMarker },
-    computed: mapGetters(["allUAVs"]),
+  components: { yandexMap, ymapMarker },
+  computed: mapGetters(["allUAVs"]),
   data() {
     return {
       coords: [55.753215, 46.622504],
       settings: settings,
-      markerfill: {
+      markerfill_out: {
         enabled: true,
-        color: "#DB4521",
-        opacity: 0.8
+        color: "#6A5ACD",
+        opacity: 0.4,
       },
-      markerstroke: {
-color: "#000000",
-opacity: 0.8,
- width: 5
+      markerstroke_out: {
+        color: "#483D8B",
+        opacity: 0.4,
+        width: 2,
       },
-    }},
-    methods: {
+      markerfill_in: {
+        enabled: true,
+        color: "#B22222",
+        opacity: 0.4,
+      },
+      markerstroke_in: {
+        color: "#8B0000",
+        opacity: 0.4,
+        width: 2,
+      },
+      markerfill_center: {
+        enabled: true,
+        color: "#000000",
+        opacity: 1,
+      },
+      markerstroke_center: {
+        color: "#000000",
+        opacity: 1,
+        width: 2,
+      },
+    };
+  },
+  methods: {
     onClick(e) {
-      this.coords = e.get('coords');
+      this.coords = e.get("coords");
     },
   },
-}
-   
-    
-
+};
 </script>
 
 <style>
