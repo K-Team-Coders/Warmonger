@@ -6,7 +6,7 @@
       marker-id="1"
       :marker-fill="markerfill_out"
       :marker-stroke="markerstroke_out"
-      circle-radius="10000"
+      circle-radius="1000000"
     />
     <ymap-marker
       :coords="coords"
@@ -14,7 +14,7 @@
       marker-id="1"
       :marker-fill="markerfill_in"
       :marker-stroke="markerstroke_in"
-      circle-radius="5000"
+      circle-radius="500000"
     />
     <ymap-marker
       :coords="coords"
@@ -26,7 +26,7 @@
     />
   </yandex-map>
 </template>
-
+ 
 <script>
 import { mapGetters, mapActions } from "vuex";
 import { yandexMap, ymapMarker } from "vue-yandex-maps";

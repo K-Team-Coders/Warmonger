@@ -28,36 +28,12 @@
                 v-model="selected"
               >
                 <option disabled value="">Выберите страну</option>
-                <option v-for="country in allCountries" :key="country"> {{country}}</option>
+                <option v-for="country in allCountries" :key="country">
+                  {{ country }}
+                </option>
               </select>
               <div class="mt-4 h-screen">
-                <div
-                  class="flex justify-center pb-2 items-center text-sm font-rale font-medium"
-                >
-                  <div class="flex flex-col justify-between p-3 hover:bg-sky-70 leading-normal">
-                    <p class="text-lg font-bold tracking-tight text-white">
-                      General Atomics MQ-1C Grey Eagle
-                    </p>
-                    <p class="mb-1 font-normal text-gray-200 border-b-2">
-                      Страна: Америкосы
-                    </p>
-                    <p class="mb-1 font-normal text-gray-200 border-b-2">
-                      Коммисия: 1000$
-                    </p>
-                    <p class="mb-1 font-normal text-gray-200 border-b-2">
-                      Дальность, км: 1800
-                    </p>
-                    <p class="mb-1 font-normal text-gray-200 border-b-2">
-                      Нагрузка, кг: 1000
-                    </p>
-                    <p class="mb-1 font-normal text-gray-200 border-b-2">
-                      Макс.скорость, км/ч: 120
-                    </p>
-                    <p class="mb-1 font-normal text-gray-200 border-b-2">
-                      Выносливость: 1000
-                    </p>
-                  </div>
-                </div>
+                <UAVCard v-for="card in allUAVS" :key="card.id" :uav_company="card.company" :uav_country="card.country" :uav_endurance="card.endurance" :uav_max_speed="card.max_speed" :uav_name="card.name" :uav_payload="card.payload" :uav_range="card.range"></UAVCard>
               </div>
             </div>
           </div>
@@ -71,19 +47,18 @@
 <script>
 import Header from "../components/Header.vue";
 import Footer from "../components/Footer.vue";
-import Graph from "../components/Graph.vue";
-import BarChart from "../components/charts/BarChart.vue";
+import UAVCard from "../components/UAVCard.vue";
 import Map from "../components/Map.vue";
 import { mapActions, mapGetters } from "vuex";
 export default {
-  components: { Header, Footer, BarChart, Map, Graph },
-  computed: mapGetters(["allCountries"]),
+  components: { Header, Footer,  Map,  UAVCard },
+  computed: mapGetters(["allCountries", "allUAVS"]),
   methods: mapActions(["GET_ALLCOUNTRIES"]),
-  async created(){
-      this.GET_ALLCOUNTRIES()
-      console.log(this.allCountries)
-    }
-  }
+  async created() {
+    console.log(this.allCountries);
+    console.log(this.allUAVS)
+  },
+};
 </script>
 
 <style>
