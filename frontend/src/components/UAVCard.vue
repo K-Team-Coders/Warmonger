@@ -10,7 +10,7 @@
       <p class="mb-1 font-normal text-gray-200 border-b-2">Страна: {{uav_country}}</p>
       <p class="mb-1 font-normal text-gray-200 border-b-2">Компания: {{uav_company}}</p>
       <p class="mb-1 font-normal text-gray-200 border-b-2">
-        Дальность, км: {{uav_range}}
+        Дальность, км: {{uav_range/1000}}
       </p>
       <p class="mb-1 font-normal text-gray-200 border-b-2">
         Нагрузка, кг: {{uav_payload}}

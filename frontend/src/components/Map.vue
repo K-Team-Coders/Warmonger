@@ -6,7 +6,7 @@
       marker-id="1"
       :marker-fill="markerfill_out"
       :marker-stroke="markerstroke_out"
-      circle-radius="1000000"
+      :circle-radius="uav_range"
     />
     <ymap-marker
       :coords="coords"
@@ -14,7 +14,7 @@
       marker-id="1"
       :marker-fill="markerfill_in"
       :marker-stroke="markerstroke_in"
-      circle-radius="500000"
+      :circle-radius="uav_range/2"
     />
     <ymap-marker
       :coords="coords"
@@ -40,7 +40,7 @@ const settings = {
 
 export default {
   components: { yandexMap, ymapMarker },
-  computed: mapGetters(["allUAVs"]),
+  computed: mapGetters(["uav_range"]),
   data() {
     return {
       coords: [55.753215, 46.622504],

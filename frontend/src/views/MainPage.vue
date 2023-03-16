@@ -33,7 +33,19 @@
                 </option>
               </select>
               <div class="mt-4 h-screen">
-                <UAVCard v-for="card in allUAVS" :key="card.id" :uav_company="card.company" :uav_country="card.country" :uav_endurance="card.endurance" :uav_max_speed="card.max_speed" :uav_name="card.name" :uav_payload="card.payload" :uav_range="card.range"></UAVCard>
+                <UAVCard
+                  v-for="card in allUAVS"
+                  :key="card.id"
+                  v-model="choosed_range"
+                  @click="click_drone(card.name, card.range)"
+                  :uav_company="card.company"
+                  :uav_country="card.country"
+                  :uav_endurance="card.endurance"
+                  :uav_max_speed="card.max_speed"
+                  :uav_name="card.name"
+                  :uav_payload="card.payload"
+                  :uav_range="card.range"
+                ></UAVCard>
               </div>
             </div>
           </div>
@@ -51,9 +63,23 @@ import UAVCard from "../components/UAVCard.vue";
 import Map from "../components/Map.vue";
 import { mapActions, mapGetters } from "vuex";
 export default {
-  components: { Header, Footer,  Map,  UAVCard },
+  components: { Header, Footer, Map, UAVCard },
+  data() {
+    return {
+      choosed_uav: "",
+      choosed_range: 0,
+    };
+  },
   computed: mapGetters(["allCountries", "allUAVS"]),
-  methods: mapActions(["GET_ALLCOUNTRIES"]),
+  methods: {
+    ...mapActions(["GET_ALLCOUNTRIES", "CHANGE_UAV", "CHANGE_RANGE"]),
+    click_drone(uav, range) {
+      this.choosed_uav = uav;
+      this.choosed_range = range;
+      this.CHANGE_UAV(uav);
+      this.CHANGE_RANGE(range)
+    },
+  },
   async created() {
     console.log(this.allCountries);
     console.log(this.allUAVS)
