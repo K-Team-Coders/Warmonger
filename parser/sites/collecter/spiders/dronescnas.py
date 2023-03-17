@@ -24,7 +24,7 @@ class DronesCnasSpider(scrapy.Spider):
             item["company"] = data[1]
             item["platform"] = data[2]
             item["endurance"] = data[3]
-            item["range"] = data[4].split()[0]
+            item["range_"] = data[4].split()[0]
             item["payload"] = data[5].split()[0]
             item["altitude"] = data[6].split()[0]
             item["mass"] = data[7].split()[0]

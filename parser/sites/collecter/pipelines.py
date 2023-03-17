@@ -6,9 +6,9 @@
 
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
-
+from loguru import logger
 
 class CollecterPipeline:
     def process_item(self, item, spider):
-        print(item)
+        logger.success(item)        
         return item
