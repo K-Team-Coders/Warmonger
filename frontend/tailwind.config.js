@@ -8,7 +8,9 @@ module.exports = {
     extend: {
       fontFamily: {
         'corme':'Cormorant Garamond',
-        'rale':'Raleway'
+        'rale':'Raleway',
+        'roboto':'Roboto',
+        'monster':'Montserrat'
       },
       colors:{
         'dark-blue':'#1a1e22',

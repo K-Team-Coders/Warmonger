@@ -1,38 +1,28 @@
 <template>
   <body class="bg-idealblack">
     <Header></Header>
-    <div class="px-12 pt-16">
-      <div class="flex">
-        <div class="w-2/3 border border-gray-50">
-          <div class="px-1 border border-gray-50">
-            <h2
-              class="text-center font-rale font-bold text-4xl text-whitesmoke mb-3"
-            >
-              Карта
-            </h2>
-            <Map></Map>
-          </div>
-        </div>
-        <div class="w-1/3 border border-gray-50">
-          <div class="px-4 border border-gray-50">
-            <h2
-              class="text-center font-rale font-bold text-4xl text-whitesmoke mb-3"
-            >
-              Приспешники
-            </h2>
-            <div
-              class="px-2 border-opacity-80 border text-black border-gray-50"
-            >
-              <select
-                class="px-6 mt-2 text-idealblack border border-gray-100 text-lg rounded-lg block w-full p-2"
-                v-model="selected"
+    <div class="px-3 pt-2">
+      <div class="flex flex-col">
+        <div class="w-full border-b-red-500 border-b">
+          <div class="px-4 mb-10">
+            <div class=" text-black px-24">
+              <div class="flex justify-between items-center pb-2 mt-2">
+                <span class="text-3xl text-whitesmoke font-monster rounded-lg">Выбранный БПЛА:</span>
+                <select
+                  class="px-6 text-idealblack text-lg rounded-lg w-1/3 mr-8 p-2"
+                  v-model="selected"
+                >
+                  <option class="" disabled value="">
+                    Выберите страну
+                  </option>
+                  <option v-for="country in allCountries" :key="country">
+                    {{ country }}
+                  </option>
+                </select>
+              </div>
+              <div
+                class=" mb-10 grid grid-cols-4 flex-col h-[52rem] overflow-y-scroll"
               >
-                <option disabled value="">Выберите страну</option>
-                <option v-for="country in allCountries" :key="country">
-                  {{ country }}
-                </option>
-              </select>
-              <div class="mt-4 h-screen">
                 <UAVCard
                   v-for="card in allUAVS"
                   :key="card.id"
@@ -48,6 +38,16 @@
                 ></UAVCard>
               </div>
             </div>
+          </div>
+        </div>
+        <div class="w-full px-28">
+          <div class="px-1">
+            <h2
+              class="text-center mt-6 font-monster text-4xl text-whitesmoke mb-8"
+            >
+              Область применения
+            </h2>
+            <Map></Map>
           </div>
         </div>
       </div>
@@ -77,12 +77,12 @@ export default {
       this.choosed_uav = uav;
       this.choosed_range = range;
       this.CHANGE_UAV(uav);
-      this.CHANGE_RANGE(range)
+      this.CHANGE_RANGE(range);
     },
   },
   async created() {
     console.log(this.allCountries);
-    console.log(this.allUAVS)
+    console.log(this.allUAVS);
   },
 };
 </script>
