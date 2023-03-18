@@ -5,23 +5,23 @@
       <div class="flex flex-col">
         <div class="w-full border-b-red-500 border-b">
           <div class="px-4 mb-10">
-            <div class=" text-black px-24">
+            <div class="text-black px-24">
               <div class="flex justify-between items-center pb-2 mt-2">
-                <span class="text-3xl text-whitesmoke font-monster rounded-lg">Выбранный БПЛА: {{ choosed_uav }}</span>
+                <span class="text-3xl text-whitesmoke font-monster rounded-lg"
+                  >Выбранный БПЛА:  {{ choosed_uav }}</span
+                >
                 <select
                   class="px-6 text-idealblack text-lg rounded-lg w-1/3 mr-8 p-2"
                   v-model="selected"
                 >
-                  <option class="" disabled value="">
-                    Выберите страну
-                  </option>
+                  <option class="" disabled value="">Выберите страну</option>
                   <option v-for="country in allCountries" :key="country">
                     {{ country }}
                   </option>
                 </select>
               </div>
               <div
-                class=" mb-10 grid grid-cols-4 flex-col h-[52rem] overflow-y-scroll"
+                class="mb-10 grid grid-cols-4 flex-col h-[52rem] overflow-y-scroll"
               >
                 <UAVCard
                   v-for="card in allUAVS"

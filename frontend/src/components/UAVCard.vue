@@ -15,29 +15,42 @@
       >
         {{ uav_name }}
       </p>
-      <p class="mb-1 text-xl font-monster text-gray-800 border-b-2 border-black">
+      <p
+        class="mb-1 text-xl font-monster text-gray-800 border-b-2 border-black"
+      >
         Страна: <span class="font-bold"> {{ uav_country }} </span>
       </p>
-      <p class="mb-1 text-lg font-monster font-normal text-black border-b-2 border-black">
+      <p
+        class="mb-1 text-lg font-monster font-normal text-black border-b-2 border-black"
+      >
         Компания: <span class="font-bold"> {{ uav_company }}</span>
       </p>
-      <p class="mb-1 text-lg font-normal font-monster text-black border-b-2 border-black">
-        Дальность, км: <span class="font-bold">  {{ uav_range / 1000 }} </span>
+      <p
+        class="mb-1 text-lg font-normal font-monster text-black border-b-2 border-black"
+      >
+        Дальность, км: <span class="font-bold"> {{ uav_range / 1000 }} </span>
       </p>
-      <p class="mb-1 text-lg font-normal text-black font-monster border-b-2 border-black">
-        Нагрузка, кг:  <span class="font-bold">{{ uav_payload }}</span>
+      <p
+        class="mb-1 text-lg font-normal text-black font-monster border-b-2 border-black"
+      >
+        Нагрузка, кг: <span class="font-bold">{{ uav_payload }}</span>
       </p>
-      <p class="mb-1 text-lg font-normal text-black border-b-2 font-monster border-black">
+      <p
+        class="mb-1 text-lg font-normal text-black border-b-2 font-monster border-black"
+      >
         Макс.скорость, км/ч: <span class="font-bold"> {{ uav_max_speed }}</span>
       </p>
-      <p class="text-lg font-normal text-black border-b-2 border-black font-monster">
+      <p
+        class="text-lg font-normal text-black border-b-2 border-black font-monster"
+      >
         Время работы, ч: <span class="font-bold"> {{ uav_endurance }}</span>
       </p>
     </div>
-    <a
-        href="#"
-        class="flex justify-center mt-2 hover:text-gray-50 items-center py-2 text-base font-medium text-center text-gray-50 bg-red-800 rounded-b-lg hover:bg-red-900 focus:ring-4 focus:outline-none focus:ring-red-300"
-      >
+    <button
+      @click="isModalOpen = true"
+      class="flex justify-center w-full mt-2 hover:text-gray-50 items-center py-2 text-base font-monster font-medium text-center text-gray-50 bg-red-800 rounded-b-lg hover:bg-red-900 focus:ring-4 focus:outline-none focus:ring-red-300"
+    >
+      <a href="#" class="hover:text-gray-50 flex items-center text-lg">
         Узнать больше
         <svg
           aria-hidden="true"
@@ -53,11 +66,36 @@
           ></path>
         </svg>
       </a>
+    </button>
+    <div>
+      <ModalWindow
+        v-if="isModalOpen"
+        :uav_company="uav_company"
+        :uav_country="uav_country"
+        :uav_endurance="uav_endurance"
+        :uav_max_speed="uav_max_speed"
+        :uav_name="uav_name"
+        :uav_payload="uav_payload"
+        :uav_range="uav_range"
+        @close="isModalOpen = false"
+      />
+    </div>
   </div>
 </template>
 
 <script>
+import ModalWindow from "./ModalWindow.vue";
 export default {
+  components: {
+    ModalWindow,
+  },
+  data() {
+    return {
+      isModalOpen: false,
+    };
+  },
+  emits: ["close"],
+
   props: {
     uav_name: String,
     uav_country: String,
