@@ -16,10 +16,37 @@ USER = os.getenv("USER")
 PASSWORD = os.getenv("PASSWORD")
 DBNAME = os.getenv("DBNAME")
 
-
 class MetaSpider(scrapy.Spider):
     name = "metaspider"
     
+    def preprocessing_urls(self, urls):
+        """
+        Предобработка ссылок 
+        """
+        cleaned = []
+        for url in urls:
+            # Нахождение ненужных юрлов по типу контакты, форумы и т.п.
+            checker = False
+            for item in self.rubbish:
+                if item in url:
+                    checker = True
+            
+            # Проверка на нахождение в том же домене (против бесконечных блужданий по интернету)
+            domen_checker = False
+            for domen in self.domens:
+                if domen in url:
+                    domen_checker = True
+
+            # Финальный чек и проверка на PHP-производные сайты
+            try:
+                if not checker and domen_checker:
+                    cleaned.append(url)
+                elif not checker and url[0] == '/' and len(url) > 1:
+                    cleaned.append(url)
+            except IndexError:
+                pass
+        return cleaned
+
     def start_requests(self):
         self.connection = psycopg2.connect(
             host=HOST,
@@ -51,23 +78,11 @@ class MetaSpider(scrapy.Spider):
         self.visited.append(response.url)
         urls = response.css('a::attr(href)').extract()
         
-        cleaned = []
-        for url in urls:
-            checker = False
-            for item in self.rubbish:
-                if item in url:
-                    checker = True
-
-            domen_checker = False
-            for domen in self.domens:
-                if domen in url:
-                    domen_checker = True
-            if not checker and domen_checker:
-                cleaned.append(url)
-
+        cleaned = self.preprocessing_urls(urls)
+        
         logger.debug(len(urls))
         logger.debug(len(cleaned))
-
+        logger.debug(urls)
         logger.debug(cleaned)
         # for url in urls:
             # if url not in self.visited:
