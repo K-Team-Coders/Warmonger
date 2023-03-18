@@ -113,37 +113,38 @@ class MetaSpider(scrapy.Spider):
                 # Если нашли в ссылке - продолжаем парсинг
                 try:
                     href = params.parent.parent.find('a').get('href')
-
                     header = {
                         "User-Agent": self.headers[random.randrange(0, len(self.headers))]["user_agent"]
                     }
-                    
+
                     # Если PHP - стиль
                     if href[0] == '/':
-                        logger.success(response.url+href)
-                        yield scrapy.Request(url=response.url+href, method="GET", headers=header, callback=self.parse)
+                        link = "https://" +self.current_domen + href
+                        logger.success(link)
+                        yield scrapy.Request(url=link, method="GET", headers=header, callback=self.parse)
 
                     # Если стандартный переход 
                     else:
                         logger.success(href)
                         yield scrapy.Request(url=href, method="GET", headers=header, callback=self.parse)
-                
                 except Exception as e:
                     logger.error(e)
-                
                 except:
                     logger.error('Not a href inside!')
 
                 # Если ссылки нет значит проверяем ближайшие тэги
                 
-                logger.warning(params.parent.parent)            
+                logger.warning(params.parent.parent)
 
-            for url in cleaned:
-                if url not in self.visited:
-                    header = {
-                        "User-Agent": self.headers[random.randrange(0, len(self.headers))]["user_agent"]
-                    }
-                    yield scrapy.Request(url=url, method="GET", headers=header, callback=self.parse)
+            # Не нашли характеристики? https://i.pinimg.com/originals/01/e6/c2/01e6c2368a9720c63ac7a981c4500302.png
+            # Ищем дальше по тому что есть 
+            else:
+                for url in cleaned:
+                    if url not in self.visited:
+                        header = {
+                            "User-Agent": self.headers[random.randrange(0, len(self.headers))]["user_agent"]
+                        }
+                        yield scrapy.Request(url=url, method="GET", headers=header, callback=self.parse)
         except Exception as e:
             logger.error(e)
         
