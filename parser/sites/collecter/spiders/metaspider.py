@@ -1,7 +1,9 @@
 import json
 import datetime
 import os
+import random
 
+from bs4 import BeautifulSoup as BS
 import psycopg2
 import scrapy
 from loguru import logger
@@ -25,26 +27,29 @@ class MetaSpider(scrapy.Spider):
         """
         cleaned = []
         for url in urls:
-            # Нахождение ненужных юрлов по типу контакты, форумы и т.п.
-            checker = False
-            for item in self.rubbish:
-                if item in url:
-                    checker = True
-            
-            # Проверка на нахождение в том же домене (против бесконечных блужданий по интернету)
-            domen_checker = False
-            for domen in self.domens:
-                if domen in url:
+        
+            if len(url) > 0:
+
+                # Нахождение ненужных юрлов по типу контакты, форумы и т.п.
+                checker = False
+                for item in self.rubbish:
+                    if item in url:
+                        checker = True      
+
+                # Чек на вложенные запросы
+                if url[0] == '/':
+                    cleaned.append("https://" + str(self.current_domen) + str(url))
+                    break
+
+                # Проверка на нахождение в том же домене (против бесконечных блужданий по интернету)
+                domen_checker = False
+                if self.current_domen in url:
                     domen_checker = True
 
-            # Финальный чек и проверка на PHP-производные сайты
-            try:
+                # Финальный чек и проверка на PHP-производные сайты
                 if not checker and domen_checker:
                     cleaned.append(url)
-                elif not checker and url[0] == '/' and len(url) > 1:
-                    cleaned.append(url)
-            except IndexError:
-                pass
+
         return cleaned
 
     def start_requests(self):
@@ -55,53 +60,102 @@ class MetaSpider(scrapy.Spider):
             password=PASSWORD,
             dbname=DBNAME
         )
-        self.rubbish = ["policy", "instagram", "terms", "footer", "download", "service", "youtube", "login", "pdf", "img", "png", "sign", "support", "logout","faq", "blog", "develop","javascript", "accounts", "auth", "user", "forum", "contacts", "facebook", "#page", "cart", "tel", "#", "@", "company", "personal", "action"]
+        self.rubbish = ["policy", "instagram", "wp-content", "terms", "webinar", "footer", "download", "service", "youtube", "login", "pdf", "jpeg", "img", "jpg", "png", "sign", "support", "logout","faq", "blog", "develop","javascript", "accounts", "auth", "user", "forum", "contacts", "facebook", "#page", "cart", "tel", "@", "company", "personal", "action"]
         self.cursor = self.connection.cursor()
-        self.visited = []
-        self.domens = []
+        self.current_domen = ''
 
+        self.visited = []
+        self.sitemap = []
+
+        self.headers = []
+
+        with open(os.path.join(Path.cwd().joinpath('collecter').joinpath('spiders'), 'agents.json')) as f:
+            self.headers = json.load(f)
+        
         urls = [
-            'https://aeromotus.ru/', 
-            "https://nelk.ru/", 
+            # 'https://aeromotus.ru/product/dji-matrice-30t/',
+            # 'https://aeromotus.ru/webinar/dji-mavic-3-seriya-enterprise/',
+            # 'https://aeromotus.ru/', 
+            # "https://nelk.ru/", 
             "https://dji.com/ru/dji-fpv/specs", 
-            "https://geobox.ru/"
+            # "https://geobox.ru/"
         ]
 
         for url in urls:
             left = url.find('//') + 2
             right = url[left:].find('/') + left
-            self.domens.append(url[left:right])
+            self.current_domen = url[left:right]
             yield scrapy.Request(url=url, method="GET", callback=self.parse)
 
     def parse(self, response):
         logger.debug(response.url)
+        for item in self.rubbish:
+            if item in response.url:
+                logger.debug('Filter error')
+                yield None
         self.visited.append(response.url)
-        urls = response.css('a::attr(href)').extract()
+        logger.debug(len(self.sitemap))
+        logger.debug(len(self.visited))
         
-        cleaned = self.preprocessing_urls(urls)
+        try:
+            # Добавление юрлов
+            body = response.xpath('//div')
+            urls = body.css('a::attr(href)').extract()
+            cleaned = self.preprocessing_urls(urls)
+            self.sitemap.extend(cleaned)
+            self.sitemap = list(set(self.sitemap))
+
+            # Обработка текста
+            soup = BS(response.text, 'html.parser')
+            params = soup.find(text='Характеристики')
+            if params:
+                try:
+                    logger.warning(params['href'])
+                    tr = soup.find_all('tr')
+                    li = soup.find_all('li')
+                    
+                    for trs in tr:
+                        logger.warning(trs)
+                    
+                    for lis in li:
+                        logger.warning(lis)
+                except:
+                    pass
+            
+
+            for url in cleaned:
+                if url not in self.visited:
+                    header = {
+                        "User-Agent": self.headers[random.randrange(0, len(self.headers))]["user_agent"]
+                    }
+                    yield scrapy.Request(url=url, method="GET", headers=header, callback=self.parse)
+        except Exception as e:
+            logger.error(e)
         
-        logger.debug(len(urls))
-        logger.debug(len(cleaned))
-        logger.debug(urls)
-        logger.debug(cleaned)
-        # for url in urls:
-            # if url not in self.visited:
-                # yield scrapy.Request(url=url, method="GET", callback=self.parse_with_extraction)
+        
+    # def parse_full_urls(self, response):
+    #     logger.debug(response.url)
+    #     self.visited.append(response.url)
+    #     urls = response.css('a::attr(href)').extract()
+        
+    #     cleaned = self.preprocessing_urls(urls)
 
-    def parse_with_extraction(self, response):
-        logger.debug(response.url)
-        self.visited.append(response.url)
-        urls = response.css('a::attr(href)').extract()
-        # logger.debug(urls)
+        
 
-        uls = response.css('ul').extract()
-        logger.success(type(uls))
-        table = response.xpath('//table').getall()
-        logger.success(table)
+    # def parse_with_extraction(self, response):
+    #     logger.debug(response.url)
+    #     self.visited.append(response.url)
+    #     urls = response.css('a::attr(href)').extract()
 
-        for url in urls:
-            if url not in self.visited:
-                yield scrapy.Request(url=url, method="GET", callback=self.parse_with_extraction)
+    #     uls = response.css('ul').extract()
+    #     logger.success(type(uls))
+    #     table = response.xpath('//table').getall()
+    #     logger.success(table)
+
+    #     for url in urls:
+    #         if url not in self.visited:
+    #             yield scrapy.Request(url=url, method="GET", callback=self.parse_with_extraction)
 
     def closed(self, reason):
         logger.error(len(self.visited))
+        logger.success(self.sitemap)
