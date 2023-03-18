@@ -4,7 +4,7 @@ import time
 import scrapy
 from loguru import logger
 
-from ..items import *
+from ..items import Object
 
 class AeromotusSpider(scrapy.Spider):
     name = "aeromotus"
@@ -30,8 +30,15 @@ class AeromotusSpider(scrapy.Spider):
             yield scrapy.Request(url=url+"#tab-specification", method="GET", callback=self.parse_all_urls)
 
     def parse_all_urls(self, response):
-        th = response.xpath('//table//tr//th/text()').getall()
-        td = response.xpath('//table//tr//td/text()').getall()
+        name = response.xpath('//h1/text()').get()
+        logger.debug(name)
 
-        for index in range(len(th)):
-            logger.success(th[index] + " || " + td[index])
+
+        h3 = response.xpath('//div[@class="woocommerce-Tabs-panel woocommerce-Tabs-panel--specification panel entry-content wc-tab"]//h3/text()').getall()
+        logger.debug(h3)
+
+        tables = response.xpath('//table[@class="content_tbl"]')
+        for table in tables:
+            th = table.xpath('.//tr//th/text()').getall()
+            td = table.xpath('.//tr//td/text()').getall()
+            logger.debug(th)
