@@ -1,22 +1,22 @@
 <template>
   <div
-    class="fixed inset-0 z-10 bg-black bg-opacity-75 focus:outline-none"
+    class="fixed pt-3 inset-0 z-10 bg-black bg-opacity-75 focus:outline-none"
     @click.self="close"
     tabindex="-1"
     @keydown.esc="close"
   >
     <div class="bg-gray-200 max-w-xl mx-auto my-2">
-      <div class="p-2 text-right">
+      <div class="absolute right-[41.5rem] p-2">
         <ModalWindowButtonClose @click="close" />
       </div>
-      <div class="py-2">
+      <div class="">
         <img
           class="shadow-2xl flex justify-center items-center mx-auto w-full h-full"
           :src="uav_href"
           alt=""
         />
         <div
-          class="flex transition flex-col justify-between py-2 px-4  ml-2 mr-4 leading-normal"
+          class="flex transition flex-col justify-between py-2 pb-4 px-4 ml-2 mr-4 leading-normal"
         >
           <p
             class="text-2xl my-2 font-monster font-bold tracking-tight text-gray-800"

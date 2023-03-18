@@ -1,6 +1,6 @@
 <template>
   <div
-    class="items-center hover:bg-white transition mt-3 mb-2 text-sm w-[24rem] font-roboto rounded-lg bg-gray-300 bg-opacity-85"
+    class="hover:bg-white transition mt-3 mb-2 text-sm w-[24rem] font-roboto rounded-lg bg-gray-300 bg-opacity-85"
   >
     <img
       class="rounded-t-lg shadow-md h-[20rem] w-full"
@@ -8,10 +8,10 @@
       alt=""
     />
     <div
-      class="flex transition flex-col justify-between p-2 ml-2 mr-4 leading-normal"
+      class="p-2 mr-4"
     >
       <p
-        class="text-2xl my-2 font-monster font-bold tracking-tight text-gray-800"
+        class="text-4xl my-2 font-mono font-bold tracking-tight text-gray-800"
       >
         {{ uav_name }}
       </p>
@@ -21,9 +21,9 @@
         Страна: <span class="font-bold"> {{ uav_country }} </span>
       </p>
       <p
-        class="mb-1 text-lg font-monster font-normal text-black border-b-2 border-black"
+        class="mb-1 h-8 text-lg font-monster font-normal text-black border-b-2 border-black"
       >
-        Компания: <span class="font-bold"> {{ uav_company }}</span>
+        Компания: <span class="font-bold text-sm "> {{ uav_company }}</span>
       </p>
       <p
         class="mb-1 text-lg font-normal font-monster text-black border-b-2 border-black"
@@ -48,7 +48,7 @@
     </div>
     <button
       @click="isModalOpen = true"
-      class="flex justify-center w-full mt-2 hover:text-gray-50 items-center py-2 text-base font-monster font-medium text-center text-gray-50 bg-red-800 rounded-b-lg hover:bg-red-900 focus:ring-4 focus:outline-none focus:ring-red-300"
+      class=" flex mt-3 justify-center w-full hover:text-gray-50 py-2 text-base font-monster font-medium text-center text-gray-50 bg-red-800 rounded-b-lg hover:bg-red-900 focus:ring-4 focus:outline-none focus:ring-red-300"
     >
       <a href="#" class="hover:text-gray-50 flex items-center text-lg">
         Узнать больше

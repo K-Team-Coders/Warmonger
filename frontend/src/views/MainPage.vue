@@ -7,8 +7,8 @@
           <div class="px-4 mb-10">
             <div class="text-black px-24">
               <div class="flex justify-between items-center pb-2 mt-2">
-                <span class="text-3xl text-whitesmoke font-monster rounded-lg"
-                  >Выбранный БПЛА:  {{ choosed_uav }}</span
+                <span class="text-3xl text-whitesmoke font-mono  rounded-lg"
+                  >Выбранный БПЛА: <span class="underline font-bold"> {{ choosed_uav }} </span></span
                 >
                 <select
                   class="px-6 text-idealblack text-lg rounded-lg w-1/3 mr-8 p-2"
