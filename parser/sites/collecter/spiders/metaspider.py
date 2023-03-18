@@ -77,8 +77,8 @@ class MetaSpider(scrapy.Spider):
             # 'https://aeromotus.ru/webinar/dji-mavic-3-seriya-enterprise/',
             # 'https://aeromotus.ru/', 
             # "https://nelk.ru/", 
-            "https://dji.com/ru/dji-fpv/specs", 
-            # "https://geobox.ru/"
+            # "https://dji.com/", 
+            "https://geobox.ru/"
         ]
 
         for url in urls:
@@ -173,5 +173,5 @@ class MetaSpider(scrapy.Spider):
     #             yield scrapy.Request(url=url, method="GET", callback=self.parse_with_extraction)
 
     def closed(self, reason):
-        logger.error(len(self.visited))
-        logger.success(self.sitemap)
+        logger.success(f"Crawled {len(self.visited)}")
+        logger.success(f"Total {len(self.sitemap)}")
