@@ -32,3 +32,11 @@ class Tags(BaseModel):
     id: int
     name: str
 
+"""
+Модель для дронов и их параметров
+"""
+class DroneETL(BaseModel):
+    url: str
+    name: str
+    params: list
+    time: datetime.datetime
