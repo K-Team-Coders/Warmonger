@@ -11,25 +11,29 @@
     <ymap-marker
       :coords="coords"
       marker-type="circle"
-      marker-id="1"
+      marker-id="2"
       :marker-fill="markerfill_in"
       :marker-stroke="markerstroke_in"
-      :circle-radius="uav_range/2"
+      :circle-radius="uav_range / 2"
     />
     <ymap-marker
+      marker-type="placemark"
       :coords="coords"
-      marker-type="circle"
-      marker-id="1"
-      :marker-fill="markerfill_center"
-      :marker-stroke="markerstroke_center"
-      circle-radius="1"
+      :icon="{
+    layout: 'default#image',
+    imageHref: uav_icon,
+    imageSize: [30, 40],
+    imageOffset: [-15, -30]
+}"
+      marker-id="3"
     />
   </yandex-map>
 </template>
- 
+
 <script>
 import { mapGetters, mapActions } from "vuex";
 import { yandexMap, ymapMarker } from "vue-yandex-maps";
+
 const settings = {
   apiKey: "06856716-badb-42a6-9815-4c8e630af04b",
   lang: "ru_RU",
@@ -40,11 +44,15 @@ const settings = {
 
 export default {
   components: { yandexMap, ymapMarker },
-  computed: mapGetters(["uav_range"]),
+  computed: {
+    ...mapGetters(["uav_range", "uav_icon"]),
+   
+  },
   data() {
     return {
       coords: [55.753215, 46.622504],
       settings: settings,
+      current_icon: '',
       markerfill_out: {
         enabled: true,
         color: "#6A5ACD",
@@ -80,7 +88,9 @@ export default {
   methods: {
     onClick(e) {
       this.coords = e.get("coords");
+      
     },
+
   },
 };
 </script>

@@ -7,7 +7,7 @@
           <div class="px-4 mb-10">
             <div class=" text-black px-24">
               <div class="flex justify-between items-center pb-2 mt-2">
-                <span class="text-3xl text-whitesmoke font-monster rounded-lg">Выбранный БПЛА:</span>
+                <span class="text-3xl text-whitesmoke font-monster rounded-lg">Выбранный БПЛА: {{ choosed_uav }}</span>
                 <select
                   class="px-6 text-idealblack text-lg rounded-lg w-1/3 mr-8 p-2"
                   v-model="selected"
@@ -27,7 +27,7 @@
                   v-for="card in allUAVS"
                   :key="card.id"
                   v-model="choosed_range"
-                  @click="click_drone(card.name, card.range)"
+                  @click="click_drone(card.name, card.range, card.max_speed)"
                   :uav_company="card.company"
                   :uav_country="card.country"
                   :uav_endurance="card.endurance"
@@ -68,16 +68,28 @@ export default {
     return {
       choosed_uav: "",
       choosed_range: 0,
+      current_icon: '',
+
     };
   },
   computed: mapGetters(["allCountries", "allUAVS"]),
   methods: {
-    ...mapActions(["GET_ALLCOUNTRIES", "CHANGE_UAV", "CHANGE_RANGE"]),
-    click_drone(uav, range) {
+    ...mapActions(["GET_ALLCOUNTRIES", "CHANGE_UAV", "CHANGE_RANGE", "CHANGE_ICON"]),
+    click_drone(uav, range, max_speed) {
       this.choosed_uav = uav;
       this.choosed_range = range;
       this.CHANGE_UAV(uav);
       this.CHANGE_RANGE(range);
+      if (0 <= max_speed && max_speed < 92.6){
+        this.current_icon = 'https://cdn-icons-png.flaticon.com/512/974/974510.png'
+      }
+      else if (92.6 <= max_speed &&  max_speed < 463){
+        this.current_icon = 'https://cdn-icons-png.flaticon.com/512/2792/2792018.png'
+      }
+      else {
+        this.current_icon = 'https://cdn-icons-png.flaticon.com/512/2223/2223188.png'
+      }
+      this.CHANGE_ICON(this.current_icon);
     },
   },
   async created() {
