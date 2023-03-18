@@ -1,54 +1,54 @@
 <template>
   <div
-    class="hover:bg-white flex flex-col justify-center transition sm:mt-3 mt-3 mb-2 text-sm sm:w-[24rem] max-w-[37rem] font-roboto rounded-lg bg-gray-300 bg-opacity-85"
+    class="hover:bg-white flex flex-col justify-center transition xl:mt-3 mt-3 sm:mb-0 text-sm sm:max-w-[37rem] sm:min-w-[16rem] 2xl:maz-w-[24rem] max-w-[37rem] font-roboto rounded-lg bg-gray-300 bg-opacity-85"
   >
     <img
-      class="rounded-t-lg shadow-md sm:h-[20rem] h-[15rem] w-full"
+      class="rounded-t-lg shadow-md sm:h-[18rem] xl:h-[20rem] h-[15rem] w-full"
       :src="uav_img"
       alt=""
     />
     <div
-      class="sm:p-2 p-2 sm:mr-4 mr-2"
+      class="sm:p-1 xl:p-2 p-2 xl:mr-4 mr-2"
     >
       <p
-        class="sm:text-4xl text-2xl sm:my-2 my-1 font-mono font-bold tracking-tight text-gray-800"
+        class="xl:text-4xl text-2xl xl:my-2 my-1 font-mono font-bold tracking-tight text-gray-800"
       >
         {{ uav_name }}
       </p>
       <p
-        class="sm:mb-1 sm:text-xl text-base font-monster text-gray-800 border-b-2 border-black"
+        class="xl:mb-1 xl:text-xl text-base font-monster text-gray-800 border-b-2 border-black"
       >
         Страна: <span class="font-bold"> {{ uav_country }} </span>
       </p>
       <p
-        class="sm:mb-1 sm:h-8 sm:text-lg text-base font-monster font-normal text-black border-b-2 border-black"
+        class="xl:mb-1 xl:h-8 xl:text-lg text-base font-monster font-normal text-black border-b-2 border-black"
       >
         Компания: <span class="font-bold sm:text-sm "> {{ uav_company }}</span>
       </p>
       <p
-        class="sm:mb-1 sm:text-lg text-base font-normal font-monster text-black border-b-2 border-black"
+        class="xl:mb-1 xl:text-lg text-base font-normal font-monster text-black border-b-2 border-black"
       >
         Дальность, км: <span class="font-bold"> {{ uav_range / 1000 }} </span>
       </p>
       <p
-        class="sm:mb-1 sm:text-lg text-base text-black font-monster border-b-2 border-black"
+        class="xl:mb-1 xl:text-lg text-base text-black font-monster border-b-2 border-black"
       >
         Нагрузка, кг: <span class="font-bold">{{ uav_payload }}</span>
       </p>
       <p
-        class="sm:mb-1 sm:text-lg text-base text-black border-b-2 font-monster border-black"
+        class="xl:mb-1 xl:text-lg text-base text-black border-b-2 font-monster border-black"
       >
         Макс.скорость, км/ч: <span class="font-bold"> {{ uav_max_speed }}</span>
       </p>
       <p
-        class="sm:mb-1 sm:text-lg text-base text-black border-b-2 border-black font-monster"
+        class="xl:mb-1 xl:text-lg text-base text-black border-b-2 border-black font-monster"
       >
         Время работы, ч: <span class="font-bold"> {{ uav_endurance }}</span>
       </p>
     </div>
     <button
       @click="isModalOpen = true"
-      class=" flex sm:mt-3 justify-center w-full hover:text-gray-50 sm:py-2  py-1 mt-2 text-base font-monster font-medium text-center text-gray-50 bg-red-800 rounded-b-lg hover:bg-red-900 focus:ring-4 focus:outline-none focus:ring-red-300"
+      class=" flex xl:mt-3 justify-center w-full hover:text-gray-50 xl:py-2  py-1 mt-2 text-base font-monster font-medium text-center text-gray-50 bg-red-800 rounded-b-lg hover:bg-red-900 focus:ring-4 focus:outline-none focus:ring-red-300"
     >
       <a href="#" class="hover:text-gray-50 flex items-center text-lg">
         Узнать больше
