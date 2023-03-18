@@ -4,7 +4,8 @@ export default {
     UAV_list: [
       
     ],
-    countries_list: ["Все страны", "Russia", "USA"],
+    countries_list: ["Все страны", "Afghanistan", "Argentina","Australia",
+    "Austria","Belarus","Belgium","Brazil","Bulgaria","Canada","Chile","China","Croatia","Czech Republic","Estonia","Finland","France","Germany","Greece","Hong Kong","Hungary","India","Indonesia","Iran","Israel","Italy","Japan","Latvia","Malaysia","Mexico","Netherlands","New Zealand","Norway","Pakistan","Poland","Portugal","Romania","Russia","Singapore","Slovenia","South Africa","South Korea","Spain","Sweden","Switzerland","Taiwan","Thailand","Turkey","UAE","UK","USA" ],
     choosed_country: " ",
     choosed_uav: "",
     choosed_range: 0,

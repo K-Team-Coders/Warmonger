@@ -11,11 +11,9 @@
                   >Выбранный БПЛА: <span class="underline font-bold"> {{ choosed_uav }} </span></span
                 >
                 <select
-                  class="sm:px-6 px-2 text-idealblack sm:text-lg text-sm rounded-lg sm:w-1/3 w-1/2 mr-2 sm:mr-8 sm:p-2 p-1"
-                  v-model="selected"
-                >
-                  <option class="" disabled value="">Выберите страну</option>
-                  <option v-for="country in allCountries" :key="country">
+                  class="sm:px-6 px-2 text-idealblack sm:text-lg text-sm rounded-lg sm:w-1/3 w-1/2 mr-2 sm:mr-8 sm:p-2 p-1"  v-model="selected"
+                > 
+                  <option v-for="country in allCountries" :key="country.id">
                     {{ country }}
                   </option>
                 </select>
@@ -24,7 +22,7 @@
                 class="sm:mb-10 grid grid-cols-1 sm:grid-cols-4 sm:h-[52rem] h-[40rem] overflow-y-scroll"
               >
                 <UAVCard
-                  v-for="card in allUAVS"
+                  v-for="card in filteredList"
                   :key="card.id"
                   v-model="choosed_range"
                   @click="click_drone(card.name, card.range_, card.max_speed)"
@@ -70,11 +68,19 @@ export default {
       choosed_uav: "",
       choosed_range: 0,
       current_icon: '',
-      selected: ''
+      selected: 'Все страны'
 
     };
   },
-  computed: mapGetters(["allCountries", "allUAVS"]),
+  computed: {
+    ...mapGetters(["allCountries", "allUAVS"]),
+    filteredList(){
+        let count= this.selected;
+        return this.allUAVS.filter(function (elem) {
+            if(count==='Все страны') return true;
+            else return elem.country.indexOf(count) > -1;
+        })
+  }},
   methods: {
     ...mapActions(["GET_ALLCOUNTRIES", "CHANGE_UAV", "CHANGE_RANGE", "CHANGE_ICON", "GET_ALLUAVS"]),
     click_drone(uav, range, max_speed) {
