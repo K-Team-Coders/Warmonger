@@ -9,14 +9,14 @@
       <div class="p-2 text-right">
         <ModalWindowButtonClose @click="close" />
       </div>
-      <div class="px-4 py-2">
+      <div class="py-2">
         <img
-          class="shadow-2xl flex justify-center items-center mx-auto"
-          src="../DJI_Phantom_4_in_Flight_March_2016.jpg"
+          class="shadow-2xl flex justify-center items-center mx-auto w-full h-full"
+          :src="uav_href"
           alt=""
         />
         <div
-          class="flex transition flex-col justify-between p-2 ml-2 mr-4 leading-normal"
+          class="flex transition flex-col justify-between py-2 px-4  ml-2 mr-4 leading-normal"
         >
           <p
             class="text-2xl my-2 font-monster font-bold tracking-tight text-gray-800"
@@ -77,6 +77,7 @@ export default {
   },
   emits: ["close"],
   props: {
+    uav_href: String,
     uav_name: String,
     uav_country: String,
     uav_company: String,

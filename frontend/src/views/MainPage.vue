@@ -27,14 +27,15 @@
                   v-for="card in allUAVS"
                   :key="card.id"
                   v-model="choosed_range"
-                  @click="click_drone(card.name, card.range, card.max_speed)"
+                  @click="click_drone(card.name, card.range_, card.max_speed)"
+                  :uav_img="card.picture"
                   :uav_company="card.company"
                   :uav_country="card.country"
                   :uav_endurance="card.endurance"
                   :uav_max_speed="card.max_speed"
                   :uav_name="card.name"
                   :uav_payload="card.payload"
-                  :uav_range="card.range"
+                  :uav_range="card.range_"
                 ></UAVCard>
               </div>
             </div>
@@ -69,12 +70,13 @@ export default {
       choosed_uav: "",
       choosed_range: 0,
       current_icon: '',
+      selected: ''
 
     };
   },
   computed: mapGetters(["allCountries", "allUAVS"]),
   methods: {
-    ...mapActions(["GET_ALLCOUNTRIES", "CHANGE_UAV", "CHANGE_RANGE", "CHANGE_ICON"]),
+    ...mapActions(["GET_ALLCOUNTRIES", "CHANGE_UAV", "CHANGE_RANGE", "CHANGE_ICON", "GET_ALLUAVS"]),
     click_drone(uav, range, max_speed) {
       this.choosed_uav = uav;
       this.choosed_range = range;
@@ -93,8 +95,7 @@ export default {
     },
   },
   async created() {
-    console.log(this.allCountries);
-    console.log(this.allUAVS);
+    this.GET_ALLUAVS()
   },
 };
 </script>

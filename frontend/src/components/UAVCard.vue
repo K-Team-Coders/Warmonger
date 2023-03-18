@@ -3,8 +3,8 @@
     class="items-center hover:bg-white transition mt-3 mb-2 text-sm w-[24rem] font-roboto rounded-lg bg-gray-300 bg-opacity-85"
   >
     <img
-      class="rounded-t-lg shadow-md"
-      src="../DJI_Phantom_4_in_Flight_March_2016.jpg"
+      class="rounded-t-lg shadow-md h-[20rem] w-full"
+      :src="uav_img"
       alt=""
     />
     <div
@@ -70,6 +70,7 @@
     <div>
       <ModalWindow
         v-if="isModalOpen"
+        :uav_href="uav_img"
         :uav_company="uav_company"
         :uav_country="uav_country"
         :uav_endurance="uav_endurance"
@@ -97,6 +98,7 @@ export default {
   emits: ["close"],
 
   props: {
+    uav_img: String,
     uav_name: String,
     uav_country: String,
     uav_company: String,
