@@ -107,21 +107,36 @@ class MetaSpider(scrapy.Spider):
 
             # Обработка текста
             soup = BS(response.text, 'html.parser')
+            # # Нашли слово характеристики
             params = soup.find(text='Характеристики')
             if params:
+                # Если нашли в ссылке - продолжаем парсинг
                 try:
-                    logger.warning(params['href'])
-                    tr = soup.find_all('tr')
-                    li = soup.find_all('li')
+                    href = params.parent.parent.find('a').get('href')
+
+                    header = {
+                        "User-Agent": self.headers[random.randrange(0, len(self.headers))]["user_agent"]
+                    }
                     
-                    for trs in tr:
-                        logger.warning(trs)
-                    
-                    for lis in li:
-                        logger.warning(lis)
+                    # Если PHP - стиль
+                    if href[0] == '/':
+                        logger.success(response.url+href)
+                        yield scrapy.Request(url=response.url+href, method="GET", headers=header, callback=self.parse)
+
+                    # Если стандартный переход 
+                    else:
+                        logger.success(href)
+                        yield scrapy.Request(url=href, method="GET", headers=header, callback=self.parse)
+                
+                except Exception as e:
+                    logger.error(e)
+                
                 except:
-                    pass
-            
+                    logger.error('Not a href inside!')
+
+                # Если ссылки нет значит проверяем ближайшие тэги
+                
+                logger.warning(params.parent.parent)            
 
             for url in cleaned:
                 if url not in self.visited:
