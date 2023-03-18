@@ -1,6 +1,6 @@
 <template>
 <footer class="text-center text-black ">
-  <div class="sm:pt-6">
+  <div class="xl:pt-6">
     <div class="flex justify-center"> 
       <a href="https://github.com/K-Team-Coders/Warmonger" target="_blank" type="button" class="rounded-lg border-2 border-whitesmoke text-whitesmoke leading-normal uppercase hover:bg-red-800 hover:text-whitesmoke focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-32 h-12 m-6">
         <svg aria-hidden="true"
