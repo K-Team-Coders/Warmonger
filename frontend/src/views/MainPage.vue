@@ -1,17 +1,17 @@
 <template>
   <body class="bg-idealblack">
     <Header></Header>
-    <div class="px-3 pt-2">
+    <div class="sm:px-3 sm:pt-2">
       <div class="flex flex-col">
         <div class="w-full border-b-red-500 border-b">
-          <div class="px-4 mb-10">
-            <div class="text-black px-24">
-              <div class="flex justify-between items-center pb-2 mt-2">
-                <span class="text-3xl text-whitesmoke font-mono  rounded-lg"
+          <div class="sm:px-4 sm:mb-10">
+            <div class=" text-black sm:px-24 px-4">
+              <div class="flex justify-between items-center mb-2 sm:pb-2 sm:mt-2 mt-2">
+                <span class="sm:text-3xl text-lg text-whitesmoke font-mono rounded-lg"
                   >Выбранный БПЛА: <span class="underline font-bold"> {{ choosed_uav }} </span></span
                 >
                 <select
-                  class="px-6 text-idealblack text-lg rounded-lg w-1/3 mr-8 p-2"
+                  class="sm:px-6 px-2 text-idealblack sm:text-lg text-sm rounded-lg sm:w-1/3 w-1/2 mr-2 sm:mr-8 sm:p-2 p-1"
                   v-model="selected"
                 >
                   <option class="" disabled value="">Выберите страну</option>
@@ -21,7 +21,7 @@
                 </select>
               </div>
               <div
-                class="mb-10 grid grid-cols-4 flex-col h-[52rem] overflow-y-scroll"
+                class="sm:mb-10 grid grid-cols-1 sm:grid-cols-4 sm:h-[52rem] h-[40rem] overflow-y-scroll"
               >
                 <UAVCard
                   v-for="card in allUAVS"
@@ -41,10 +41,10 @@
             </div>
           </div>
         </div>
-        <div class="w-full px-28">
-          <div class="px-1">
+        <div class="w-full sm:px-28">
+          <div class="sm:px-1 px-4 py-2 sm:py-1">
             <h2
-              class="text-center mt-6 font-monster text-4xl text-whitesmoke mb-8"
+              class="text-center sm:mt-6 mt-2 font-monster sm:text-4xl text-2xl text-whitesmoke sm:mb-8 mb-3"
             >
               Область применения
             </h2>

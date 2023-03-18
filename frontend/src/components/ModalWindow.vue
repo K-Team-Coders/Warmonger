@@ -1,11 +1,11 @@
 <template>
   <div
-    class="fixed pt-3 inset-0 z-10 bg-black bg-opacity-75 focus:outline-none"
+    class="fixed sm:pt-3 inset-0 z-10 bg-black bg-opacity-75 focus:outline-none"
     @click.self="close"
     tabindex="-1"
     @keydown.esc="close"
   >
-    <div class="bg-gray-200 max-w-xl mx-auto my-2">
+    <div class="bg-gray-200 max-w-xl mx-auto sm:my-2">
       <div class="absolute right-[41.5rem] p-2">
         <ModalWindowButtonClose @click="close" />
       </div>

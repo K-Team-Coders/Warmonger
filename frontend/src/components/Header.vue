@@ -1,8 +1,8 @@
 <template>
   <header>
     <nav class="border-b border-red-700 ">
-      <div class="flex justify-between items-center px-4 py-3">
-        <div class="ml-10 flex flex-row gap-2.5 font-mono items-center justify-center text-whitesmoke">
+      <div class="flex justify-between items-center sm:px-4 sm:py-3 py-2 px-2">
+        <div class="sm:ml-10 ml-3 flex flex-row gap-2.5 font-mono items-center justify-center text-whitesmoke">
           <a class="hover:text-yellow-500 font-mono"
             ><svg
               xmlns="http://www.w3.org/2000/svg"
@@ -19,10 +19,10 @@
               />
             </svg>
           </a>
-          <a class="text-2xl font-rale hover:text-red-500" href=""> TrueSight</a>
+          <a class="sm:text-2xl text-lg font-rale hover:text-red-500" href=""> TrueSight</a>
         </div>
-        <div class="mr-10 text-xl ">
-          <ul class="flex flex-row space-x-8">
+        <div class="sm:mr-10 sm:text-xl text-base mr-2">
+          <ul class="flex flex-row sm:space-x-8 space-x-2">
             <li>
               <a
                 href="#"
