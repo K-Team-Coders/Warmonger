@@ -6,8 +6,6 @@ import psycopg2
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from models import *
-
 load_dotenv('../DB.ENV')
 
 IP=os.environ.get("IP")
@@ -37,12 +35,6 @@ conn = psycopg2.connect(
     port=PORT)
 
 cur = conn.cursor()
-
-@app.post("/collectNewsAfter/")
-def index(date):
-    cur.execute(f"""SELECT * FROM news WHERE news.datetime > '{date}' """)
-    date = cur.fetchall()
-    return date
 
 @app.get("/getDronesCnas/")
 def dronescnas():
