@@ -7,9 +7,7 @@
       :src="uav_img"
       alt=""
     />
-    <div
-      class="sm:p-1 xl:p-2 p-2 xl:mr-4 mr-2"
-    >
+    <div class="sm:p-1 xl:p-2 p-2 xl:mr-4 mr-2">
       <p
         class="xl:text-4xl text-2xl xl:my-2 my-1 font-mono font-bold tracking-tight text-gray-800"
       >
@@ -23,7 +21,7 @@
       <p
         class="xl:mb-1 xl:h-8 xl:text-lg text-base font-monster font-normal text-black border-b-2 border-black"
       >
-        Компания: <span class="font-bold sm:text-sm "> {{ uav_company }}</span>
+        Компания: <span class="font-bold sm:text-sm"> {{ uav_company }}</span>
       </p>
       <p
         class="xl:mb-1 xl:text-lg text-base font-normal font-monster text-black border-b-2 border-black"
@@ -48,7 +46,7 @@
     </div>
     <button
       @click="isModalOpen = true"
-      class=" flex xl:mt-3 justify-center w-full hover:text-gray-50 xl:py-2  py-1 mt-2 text-base font-monster font-medium text-center text-gray-50 bg-red-800 rounded-b-lg hover:bg-red-900 focus:ring-4 focus:outline-none focus:ring-red-300"
+      class="flex xl:mt-3 justify-center w-full hover:text-gray-50 xl:py-2 py-1 mt-2 text-base font-monster font-medium text-center text-gray-50 bg-red-800 rounded-b-lg hover:bg-red-900 focus:ring-4 focus:outline-none focus:ring-red-300"
     >
       <a href="#" class="hover:text-gray-50 flex items-center text-lg">
         Узнать больше
@@ -78,6 +76,11 @@
         :uav_name="uav_name"
         :uav_payload="uav_payload"
         :uav_range="uav_range"
+        :uav_platform="uav_platform"
+        :uav_altitude="uav_altitude"
+        :uav_mass="uav_mass"
+        :uav_width="uav_width"
+        :uav_length="uav_length"
         @close="isModalOpen = false"
       />
     </div>
@@ -106,6 +109,11 @@ export default {
     uav_range: Number,
     uav_payload: Number,
     uav_max_speed: Number,
+    uav_platform: String,
+    uav_altitude: String,
+    uav_mass: Number,
+    uav_width: Number,
+    uav_length: Number,
   },
 };
 </script>
