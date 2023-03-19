@@ -1,7 +1,7 @@
 <template>
   <body class="bg-idealblack">
     <Header2></Header2>
-    <div class="p-6">
+    <div class="px-16 py-4">
       <div class="">
         <div class="sm:hidden">
           <label for="tabs" class="sr-only">Select</label>

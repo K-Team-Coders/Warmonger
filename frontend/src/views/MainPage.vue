@@ -1,13 +1,41 @@
 <template>
   <body class="bg-idealblack">
     <Header></Header>
-    <div class="xl:px-3 xl:pt-2">
+    <div class="2xl:px-3 2xl:pt-2">
       <div class="flex flex-col">
         <div class="w-full border-b-red-500 border-b">
-          <div class="xl:px-4 sm:px-2 xl:mb-10 sm:mb-4">
-            <div class="text-black xl:px-24 px-4">
+          <div class="xl:px-4 sm:px-2 2xl:mb-10 sm:mb-4">
+            <div class="text-black 2xl:px-24 px-4">
+              <div class="border-b-red-500 border-b pb-16">
+                <p
+                  class="text-gray-50 text-2xl w-full p-4 font-monster flex justify-start"
+                >
+                  Руководство пользователя<br />
+                  1. Данная страница представляет собой член<br />
+                  2. Георгию срочно нужно начать худеть<br />
+                  3. Игорь начал сдуваться - он лох<br />
+                  4. Артем перестал пить пиво и начал качаться - что
+                  происхоидт?????<br />
+                  1. Данная страница представляет собой член<br />
+                  2. Георгию срочно нужно начать худеть<br />
+                  3. Игорь начал сдуваться - он лох<br />
+                  4. Артем перестал пить пиво и начал качаться - что
+                  происхоидт?????<br />
+                  1. Данная страница представляет собой член<br />
+                  2. Георгию срочно нужно начать худеть<br />
+                  3. Игорь начал сдуваться - он лох<br />
+                  4. Артем перестал пить пиво и начал качаться - что
+                  происхоидт?????<br />
+                  1. Данная страница представляет собой член<br />
+                  2. Георгию срочно нужно начать худеть<br />
+                  3. Игорь начал сдуваться - он лох<br />
+                  4. Артем перестал пить пиво и начал качаться - что
+                  происхоидт?????<br />
+                  5. Захар открылся (вскрылся)
+                </p>
+              </div>
               <div
-                class="flex justify-between items-center mb-2 xl:pb-2 xl:mt-2 mt-2"
+                class="flex justify-between items-center mb-2 xl:pb-2 xl:mt-2 mt-5"
               >
                 <span
                   class="xl:text-3xl sm:text-2xl text-lg text-whitesmoke font-mono rounded-lg"
