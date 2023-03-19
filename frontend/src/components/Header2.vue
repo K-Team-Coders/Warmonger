@@ -26,14 +26,14 @@
             <li>
               <a
                 href="#"
-                class="text-red-500 font-monster hover:text-red-700"
+                class="text-whitesmoke font-monster hover:text-gray-300"
                 >Обзор БПЛА разных стран</a
               >
             </li>
             <li>
               <a
                 href="#/drone_table"
-                class="text-whitesmoke font-monster hover:text-gray-400 "
+                class="text-red-500 font-monster hover:text-red-400 "
                 >База данных малых БПЛА</a
               >
             </li>
