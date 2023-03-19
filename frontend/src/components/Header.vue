@@ -32,9 +32,9 @@
             </li>
             <li>
               <a
-                href="#"
+                href="#/drone_table"
                 class="text-whitesmoke font-monster hover:text-gray-400 "
-                >База данных</a
+                >База данных малых БПЛА</a
               >
             </li>
           </ul>

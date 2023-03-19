@@ -7,7 +7,14 @@ const routes = [
     
     component: () => import(/* webpackChunkName: "about" */ '../views/MainPage.vue')
   },
+  {
+    path: '/drone_table',
+    name: 'drone_table',
+    
+    component: () => import(/* webpackChunkName: "about" */ '../views/TablePage.vue')
+  },
 ]
+
 
 const router = createRouter({
   history: createWebHashHistory(),
