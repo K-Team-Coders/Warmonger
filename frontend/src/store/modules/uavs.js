@@ -57,11 +57,11 @@ export default {
       context.commit("SET_ALLCOUNTRIES", countries_list);
     },
     GET_ALLUAVS: async (context, payload) => {
-      let UAV_list = await axios.get('http://192.168.0.156:8081/getDronesCnas/');
+      let UAV_list = await axios.get('http://127.0.0.1:8081/getDronesCnas/');
       context.commit("SET_ALLUAVS", UAV_list.data);
     },
     GET_ALLDRONES: async (context, payload) => {
-      let drone_list = await axios.get('http://192.168.0.156:8081/getSpidersData/');
+      let drone_list = await axios.get('http://127.0.0.1:8081/getSpidersData/');
       context.commit("SET_ALLDRONES", drone_list.data);
       console.log(drone_list);
     },
