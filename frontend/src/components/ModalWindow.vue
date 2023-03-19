@@ -55,6 +55,32 @@
           >
             Время работы, ч: <span class="font-bold"> {{ uav_endurance }}</span>
           </p>
+          <p
+            class="text-lg font-normal text-black border-b-2 border-black font-monster"
+          >
+            Платформа: <span class="font-bold"> {{ uav_platform }}</span>
+          </p>
+          <p
+            class="text-lg font-normal text-black border-b-2 border-black font-monster"
+          >
+            Максимальная высота, м: <span class="font-bold"> {{ uav_altitude }}</span>
+          </p>
+          <p
+            class="text-lg font-normal text-black border-b-2 border-black font-monster"
+          >
+            Взлетная масса, кг: <span class="font-bold"> {{ uav_mass }}</span>
+          </p>
+          <p
+            class="text-lg font-normal text-black border-b-2 border-black font-monster"
+          >
+            Ширина, м: <span class="font-bold"> {{ uav_width }}</span>
+          </p>
+          <p
+            class="text-lg font-normal text-black border-b-2 border-black font-monster"
+          >
+            Длина, м: <span class="font-bold"> {{ uav_length }}</span>
+          </p>
+          
         </div>
       </div>
     </div>
@@ -77,7 +103,7 @@ export default {
   },
   emits: ["close"],
   props: {
-    uav_href: String,
+    uav_img: String,
     uav_name: String,
     uav_country: String,
     uav_company: String,
@@ -85,6 +111,11 @@ export default {
     uav_range: Number,
     uav_payload: Number,
     uav_max_speed: Number,
+    uav_platform: String,
+    uav_altitude:String,
+    uav_mass:Number,
+    uav_width:Number,
+    uav_length:Number
   },
 };
 </script>
