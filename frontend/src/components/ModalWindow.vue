@@ -6,13 +6,13 @@
     @keydown.esc="close"
   >
     <div class="bg-gray-200 max-w-xl mx-auto xl:my-2">
-      <div class="absolute  2xl:right-[41.5rem] p-2">
+      <div class="absolute 2xl:right-[41.5rem] p-2">
         <ModalWindowButtonClose @click="close" />
       </div>
       <div class="">
         <img
-          class="shadow-2xl flex justify-center items-center mx-auto w-full h-full"
-          :src="uav_href"
+          class="shadow-2xl flex justify-center items-center mx-auto w-full"
+          :src="uav_img"
           alt=""
         />
         <div

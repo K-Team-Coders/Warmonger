@@ -68,7 +68,7 @@
     <div>
       <ModalWindow
         v-if="isModalOpen"
-        :uav_href="uav_img"
+        :uav_img="uav_img"
         :uav_company="uav_company"
         :uav_country="uav_country"
         :uav_endurance="uav_endurance"
