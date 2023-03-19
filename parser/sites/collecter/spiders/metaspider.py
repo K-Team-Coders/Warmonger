@@ -12,7 +12,7 @@ from loguru import logger
 from dotenv import load_dotenv
 from bs4 import BeautifulSoup as BS
 
-from .languageModel.innterface import loadCosine, cosine_sim
+from .languageModel.innterface import loadCosine, stats_method, cosine_sim, model_method
 
 load_dotenv(os.path.join(Path(__file__).resolve().parent.parent.parent.parent.parent, 'DB.env'))
 
@@ -73,13 +73,15 @@ class MetaSpider(scrapy.Spider):
 
         self.headers = []
 
+        self.dataframe = pd.DataFrame(columns=['source', 'url', 'extracted'])
+
         with open(os.path.join(Path.cwd().joinpath('collecter').joinpath('spiders'), 'agents.json')) as f:
             self.headers = json.load(f)
         
         urls = [
             # 'https://aeromotus.ru/product/dji-matrice-30t/',
             # 'https://aeromotus.ru/webinar/dji-mavic-3-seriya-enterprise/',
-            # 'https://aeromotus.ru/', 
+            'https://aeromotus.ru/', 
             # "https://nelk.ru/", 
             "https://dji.com/", 
             # "https://geobox.ru/"
@@ -94,6 +96,7 @@ class MetaSpider(scrapy.Spider):
     def parse(self, response):
         filtered = False
         logger.debug(response.url)
+
         for item in self.rubbish:
             if item in response.url:
                 logger.debug('Filter error')
@@ -160,7 +163,7 @@ class MetaSpider(scrapy.Spider):
         Функция обработки OL, UL, TABLE
         """
         logger.debug(f'Processing {url}')
-        response = requests.get(url)
+        response = requests.get(url, headers=header)
         html = BS(response.text, 'html.parser')
         total_information = []
         
@@ -178,9 +181,24 @@ class MetaSpider(scrapy.Spider):
 
         # Проверка
         for item in total_information:
-            param = cosine_sim(SEARCH_QUERY, item.text)
-            if param > 0.001:
-                logger.debug(item.text)
+
+            # ИСПОЛЬЗОВАТЬ ЛИБО БЛИЗОСТЬ ПО КОСИНУСУ, ЛИБО ПО СРЕДНЕАРИФМЕТИЧЕСКОМУ ОБЩЕЙ БЛИЗОСТИ СЛОВ !!!
+            # В исходниках функций подробнее
+
+            # param = stats_method(SEARCH_QUERY, item.text)
+            # param = cosine_sim(SEARCH_QUERY, item.text)
+            param = model_method(SEARCH_QUERY, item.text)
+            if param > 0.75:               
+                seria = pd.Series(index=['source', 'url', 'extracted'], data=[self.current_domen, url, item.text])
+                self.dataframe = self.dataframe.append(seria, ignore_index=True)
+                
+                # Добавление в БД
+                self.cursor.execute("INSERT INTO spiders VALUES (%s, %s, %s);", ('MetaSpider', url, item.text))
+                self.connection.commit()
+        
+        # Запись в XLSX
+        self.dataframe.to_excel('result.xlsx', engine='xlsxwriter')
+        
 
     def closed(self, reason):
         logger.debug(reason)

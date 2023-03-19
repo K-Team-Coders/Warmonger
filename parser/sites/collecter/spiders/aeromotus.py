@@ -78,10 +78,11 @@ class AeromotusSpider(scrapy.Spider):
         }
 
         logger.debug('Crawled!')
-        jsoned = json.dumps({"params": blocks_})
+        for block in blocks_:
+            logger.debug(block)
         
         # Запись
-        self.cursor.execute("INSERT INTO public.raw VALUES (%s, %s, %s, %s)", (str(name), str(url_), jsoned, str(datetime.datetime.now())))
+        self.cursor.execute("INSERT INTO spiders VALUES (%s, %s, %s)", ('Aeromotus', str(url_), ))
         self.connection.commit()
         logger.debug('Sended data')
 
