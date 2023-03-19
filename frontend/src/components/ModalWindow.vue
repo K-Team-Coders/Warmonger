@@ -6,7 +6,7 @@
     @keydown.esc="close"
   >
     <div class="bg-gray-200 max-w-xl mx-auto xl:my-2">
-      <div class="absolute  xl:right-[41.5rem] p-2">
+      <div class="absolute  2xl:right-[41.5rem] p-2">
         <ModalWindowButtonClose @click="close" />
       </div>
       <div class="">
