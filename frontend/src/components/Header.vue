@@ -19,7 +19,7 @@
               />
             </svg>
           </a>
-          <a class="xl:text-2xl text-lg font-rale hover:text-red-500" href=""> TrueSight</a>
+          <a class="xl:text-2xl text-lg font-rale hover:text-red-500" href=""> WARMONGER:CRAWLER</a>
         </div>
         <div class="xl:mr-10 xl:text-xl text-base mr-2">
           <ul class="flex flex-row xl:space-x-8 sm:space-x-4 sm:mr-6 space-x-2">
@@ -27,7 +27,7 @@
               <a
                 href="#"
                 class="text-red-500 font-monster hover:text-red-700"
-                >Главная</a
+                >Обзор БПЛА разных стран</a
               >
             </li>
             <li>
