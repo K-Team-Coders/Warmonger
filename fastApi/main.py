@@ -58,3 +58,17 @@ def dronescnas():
         result.append(result_subdict)
 
     return result
+
+@app.get('/getSpidersData/')
+def spider():
+    cur.execute("SELECT * FROM spiders")
+    data = cur.fetchall()
+    jsoned = []
+    for index, subdata in enumerate(data):
+        jsoned.append({
+                'spider': subdata[0],
+                'url': subdata[1],
+                "data": subdata[2] 
+            })
+        
+    return jsoned

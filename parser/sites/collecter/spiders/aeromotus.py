@@ -58,32 +58,27 @@ class AeromotusSpider(scrapy.Spider):
         tables = response.xpath('//table[@class="content_tbl"]')
         uls = response.xpath('//div[@class="woocommerce-Tabs-panel woocommerce-Tabs-panel--specification panel entry-content wc-tab"]//ul')
         if tables:
-            for index, table in enumerate(tables):
+            for index_, table in enumerate(tables):
                 th = table.xpath('.//tr//th/text()').getall()
                 td = table.xpath('.//tr//td/text()').getall()
-                blocks_.append({f"{h3[index]}" : {f"{th[index]}":f"{td[index]}" for index, data in enumerate(th)}})
-        elif uls:
-            for index, ul in enumerate(uls):
-                li = ul.xpath('.//li/text()').getall()
-                blocks_.append({f"{h3[index]}" : [li[index] for index, data in enumerate(li)]})
-            logger.debug(blocks_)
-        """
-        Используй для хранения в JSON либо в XLSX
-        """
-        result = {
-            'url': url_,
-            'name': name,
-            'params': blocks_,
-            'time': datetime.datetime.now()
-        }
+                data = ""
+                for index, data_ in enumerate(th):
+                    data = data + f"{th[index]} : {td[index]}"
+                blocks_.append(h3[index_] + " : " + data )
 
-        logger.debug('Crawled!')
+        elif uls:
+            for index_, ul in enumerate(uls):
+                li = ul.xpath('.//li/text()').getall()
+                blocks_.append(f"{h3[index_]} : {[li[index] for index, data in enumerate(li)]}")
+
+        result = ""
         for block in blocks_:
-            logger.debug(block)
-        
+            result = result + block
+
         # Запись
-        self.cursor.execute("INSERT INTO spiders VALUES (%s, %s, %s)", ('Aeromotus', str(url_), ))
-        self.connection.commit()
+        if result:
+            self.cursor.execute("INSERT INTO public.spiders VALUES (%s, %s, %s);", ('Aeromotus', str(url_), result))
+            self.connection.commit()
         logger.debug('Sended data')
 
     def closed(self, reason):

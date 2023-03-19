@@ -81,10 +81,10 @@ class MetaSpider(scrapy.Spider):
         urls = [
             # 'https://aeromotus.ru/product/dji-matrice-30t/',
             # 'https://aeromotus.ru/webinar/dji-mavic-3-seriya-enterprise/',
-            'https://aeromotus.ru/', 
+            # 'https://aeromotus.ru/', 
             # "https://nelk.ru/", 
             "https://dji.com/", 
-            # "https://geobox.ru/"
+            "https://geobox.ru/"
         ]
 
         for url in urls:
@@ -186,15 +186,26 @@ class MetaSpider(scrapy.Spider):
             # В исходниках функций подробнее
 
             # param = stats_method(SEARCH_QUERY, item.text)
-            # param = cosine_sim(SEARCH_QUERY, item.text)
-            param = model_method(SEARCH_QUERY, item.text)
-            if param > 0.75:               
+            param = cosine_sim(SEARCH_QUERY, item.text)
+            # param = model_method(SEARCH_QUERY, item.text)
+            if param > 0.01:               
                 seria = pd.Series(index=['source', 'url', 'extracted'], data=[self.current_domen, url, item.text])
                 self.dataframe = self.dataframe.append(seria, ignore_index=True)
                 
-                # Добавление в БД
-                self.cursor.execute("INSERT INTO spiders VALUES (%s, %s, %s);", ('MetaSpider', url, item.text))
-                self.connection.commit()
+                text = ''
+                if len(item.text) > 500:
+                    text = item.text[:499]
+                else:
+                    text = item.text
+
+                # Проверка 
+                self.cursor.execute("SELECT * FROM spiders WHERE spider=%s AND url=%s AND data=%s", ('MetaSpider', url, text))
+                if self.cursor.fetchall():
+                   pass
+                else: 
+                # Добавление в БДx
+                    self.cursor.execute("INSERT INTO spiders VALUES (%s, %s, %s);", ('MetaSpider', url, text))
+                    self.connection.commit()
         
         # Запись в XLSX
         self.dataframe.to_excel('result.xlsx', engine='xlsxwriter')

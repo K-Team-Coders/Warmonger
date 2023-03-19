@@ -25,10 +25,10 @@ cursor.execute("""
 CREATE TABLE public.dronescnas
     (
         name text,
-        urls text,
+        country text,
         range_ double precision,
         params json,
-        PRIMARY KEY (name, urls, range_)
+        PRIMARY KEY (name, country, range_)
     );
 
 ALTER TABLE IF EXISTS public.dronescnas
