@@ -110,7 +110,4 @@ def spider():
         
     return jsoned
 
-@app.get('/test/')
-def test():
-    cur.execute("CREATE DATABASE hello;")
-    conn.commit()
+
