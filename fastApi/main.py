@@ -6,14 +6,59 @@ import psycopg2
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-load_dotenv('../DB.ENV')
+conn = 0
+cur = 0
+dockerized = False
 
-IP=os.environ.get("IP")
-PORT=os.environ.get("PORT")
-DBNAME=os.environ.get("DBNAME")
-USER=os.environ.get("USER")
-PASSWORD=os.environ.get("PASSWORD")
+try:     
+    IP=os.environ.get("IP")
+    PORT=os.environ.get("PORT")
+    DBNAME=os.environ.get("POSTGRES_DB")
+    USER=os.environ.get("POSTGRES_USER")
+    PASSWORD=os.environ.get("POSTGRES_PASSWORD")
 
+    logger.success(('Docker DB connection started \n', IP, PORT, DBNAME, USER, PASSWORD, ' - env variables!'))
+
+    conn = psycopg2.connect(
+        dbname=DBNAME, 
+        host=IP, 
+        user=USER, 
+        password=PASSWORD, 
+        port=PORT)
+
+    cur = conn.cursor()
+
+    logger.success('Docker DB connected!')
+    dockerized = True
+
+except Exception as e:
+    logger.error(f'Docker DB connect failed \n {e}!')
+
+if not dockerized:
+    try:
+        load_dotenv('../DB.ENV')
+
+        IP=os.environ.get("IP")
+        PORT=os.environ.get("PORT")
+        DBNAME=os.environ.get("POSTGRES_DB")
+        USER=os.environ.get("POSTGRES_USER")
+        PASSWORD=os.environ.get("POSTGRES_PASSWORD")
+
+        logger.debug(('Local connection started \n', IP, PORT, DBNAME, USER, PASSWORD, ' - env variables!'))
+        
+        conn = psycopg2.connect(
+            dbname=DBNAME, 
+            host=IP, 
+            user=USER, 
+            password=PASSWORD, 
+            port=PORT)
+
+        cur = conn.cursor()
+
+        logger.succes('Local connection established!')
+    
+    except Exception as e:
+        logger.error(f'Local connection failed! \n {e}')
 
 app = FastAPI()
 
@@ -27,14 +72,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-conn = psycopg2.connect(
-    dbname=DBNAME, 
-    host=IP, 
-    user=USER, 
-    password=PASSWORD, 
-    port=PORT)
-
-cur = conn.cursor()
 
 @app.get("/getDronesCnas/")
 def dronescnas():
@@ -72,3 +109,8 @@ def spider():
             })
         
     return jsoned
+
+@app.get('/test/')
+def test():
+    cur.execute("CREATE DATABASE hello;")
+    conn.commit()
